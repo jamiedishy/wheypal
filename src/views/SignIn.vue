@@ -4,26 +4,17 @@
       <div class="col-md-12">
            <div class="col-md-8">
           <header class="mb-3">
-            <h1>WheyPal</h1>
+            <h1>Sign in</h1>
           </header>
            </div>
           <div class="col-md-8">
           <rbc-card>
-            <div slot="header">
-              <h3 class="custom-size">Sign up</h3>
-            </div>
-            
             <ul class="list-highlight">
-              <li class="my-2">
-                <rbc-input 
-                	label="Email" 
-                	placeholder="placeholder@gmail.com"
-                ></rbc-input>
-              </li>
               <li class="my-2">
                 <rbc-input 
                 	label="Username" 
                 	placeholder="username"
+                    v-model="username"
                 ></rbc-input>
               </li>
               <li class="my-2">
@@ -34,22 +25,22 @@
               </li>
             </ul>
             <div slot="footer">
-                 <rbc-button 
-            	color="primary"
-              class="mr-1"
-            >
-            	Sign up
-              </rbc-button>
-              Already a member?
-              <router-link to="/signIn">
-                <rbc-button 
+                <router-link :to="{ name: 'Dashboard', params: { username: username } }">
+                    <rbc-button 
+                        color="primary"
+                        class="mr-1"
+                    >
+                    	Sign in
+                    </rbc-button>
+                </router-link>
+              Forgot your password? 
+              <rbc-button 
                 color="primary"
                 outline
                 class="ml-1"
                 >
-                Sign in
-                </rbc-button>
-              </router-link>
+              Sucks
+              </rbc-button>
             </div>
           </rbc-card>
           </div>
@@ -62,11 +53,16 @@
 // @ is an alias to /src
 import { Card, Input, Button } from "rbc-wm-framework-vuejs/dist/wm/components";
 export default {
-  name: "Home",
+  name: "SignIn",
   components: {
     "rbc-card": Card,
     "rbc-input": Input,
     "rbc-button": Button
+  },
+  data() {
+      return {
+          username: ''
+      }
   }
 };
 </script>
