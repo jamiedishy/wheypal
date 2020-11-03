@@ -6,6 +6,7 @@
       :router="true"
       :side-nav="sideNav"
       toggle="full"
+      class="messages"
     >
       <div class="container" slot="content">
         <div class="row">
@@ -19,19 +20,15 @@
             >
               <thead>
                 <tr>
-                  <th>Level</th>
-                  <th>Sus7</th>
-                  <th>Key</th>
+                  <th>Name</th>
+                  <th>Reply status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
-                    <rbc-button size="small" outline>
-                      xx
-                    </rbc-button>
+                    xx
                   </td>
-                  <td>xx</td>
                   <td>xx</td>
                 </tr>
               </tbody>
@@ -56,7 +53,7 @@ export default {
       sideNav: [
         {
           name: "Discover",
-          // icon: "arrow-alt-right",
+          icon: "user-friends",
           displayName: "Discover",
           showInMenu: true,
           meta: {
@@ -65,7 +62,7 @@ export default {
         },
         {
           name: "Matches",
-          // icon: "arrow-alt-right",
+          icon: "star",
           displayName: "Matches",
           showInMenu: true,
           meta: {
@@ -74,7 +71,7 @@ export default {
         },
         {
           name: "Messages",
-          // icon: "arrow-alt-right",
+          icon: "envelope-open-text",
           displayName: "Messages",
           showInMenu: true,
           meta: {
@@ -83,7 +80,7 @@ export default {
         },
         {
           name: "Profile",
-          // icon: "arrow-alt-right",
+          icon: "user",
           displayName: "Profile",
           showInMenu: true,
           meta: {
@@ -100,4 +97,9 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.messages {
+  padding-left: 5%;
+  padding-top: 0%;
+}
+</style>

@@ -6,6 +6,7 @@
       :router="true"
       :side-nav="sideNav"
       toggle="full"
+      class="profile"
     >
       <div class="container" slot="content">
         <div class="row">
@@ -43,10 +44,14 @@
               <template v-else>
                 <ul class="list-highlight">
                   <li class="my-2">
-                    hi
+                    Name: {{ userName ? userName : "Undefined" }}
                   </li>
                   <li class="my-2">
-                    hi
+                    Email: {{ userEmail ? userEmail : "Undefined" }}
+                  </li>
+                  <li class="my-2">Id: {{ userId ? userId : "Undefined" }}</li>
+                  <li class="my-2">
+                    Password: {{ userPassword ? userPassword : "Undefined" }}
                   </li>
                 </ul>
                 <div slot="footer">
@@ -56,6 +61,9 @@
                 </div>
               </template>
             </rbc-card>
+            <rbc-button @click="signOut()" class="mt-2" color="primary">
+              Sign out
+            </rbc-button>
           </div>
         </div>
       </div>
@@ -70,6 +78,7 @@ import {
   Button,
   Input
 } from "rbc-wm-framework-vuejs/dist/wm/components";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Profile",
   components: {
@@ -84,7 +93,7 @@ export default {
       sideNav: [
         {
           name: "Discover",
-          // icon: "arrow-alt-right",
+          icon: "user-friends",
           displayName: "Discover",
           showInMenu: true,
           meta: {
@@ -93,7 +102,7 @@ export default {
         },
         {
           name: "Matches",
-          // icon: "arrow-alt-right",
+          icon: "star",
           displayName: "Matches",
           showInMenu: true,
           meta: {
@@ -102,7 +111,7 @@ export default {
         },
         {
           name: "Messages",
-          // icon: "arrow-alt-right",
+          icon: "envelope-open-text",
           displayName: "Messages",
           showInMenu: true,
           meta: {
@@ -111,7 +120,7 @@ export default {
         },
         {
           name: "Profile",
-          // icon: "arrow-alt-right",
+          icon: "user",
           displayName: "Profile",
           showInMenu: true,
           meta: {
@@ -120,7 +129,32 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapState({
+      userName: state => state.wheypal.userName,
+      userId: state => state.wheypal.userId,
+      userPassword: state => state.wheypal.userPassword,
+      userEmail: state => state.wheypal.userEmail
+    })
+  },
+  methods: {
+    ...mapActions(["logOffUser"]),
+    async signOut() {
+      try {
+        await this.logOffUser();
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.$router.push("/");
+      }
+    }
   }
 };
 </script>
-<style></style>
+<style>
+.profile {
+  padding-left: 5%;
+  padding-top: 0%;
+}
+</style>

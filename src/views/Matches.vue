@@ -6,6 +6,7 @@
       :router="true"
       :side-nav="sideNav"
       toggle="full"
+      class="matches"
     >
       <div class="container" slot="content">
         <div class="row">
@@ -34,7 +35,7 @@ export default {
       sideNav: [
         {
           name: "Discover",
-          // icon: "arrow-alt-right",
+          icon: "user-friends",
           displayName: "Discover",
           showInMenu: true,
           meta: {
@@ -43,7 +44,7 @@ export default {
         },
         {
           name: "Matches",
-          // icon: "arrow-alt-right",
+          icon: "star",
           displayName: "Matches",
           showInMenu: true,
           meta: {
@@ -52,7 +53,7 @@ export default {
         },
         {
           name: "Messages",
-          // icon: "arrow-alt-right",
+          icon: "envelope-open-text",
           displayName: "Messages",
           showInMenu: true,
           meta: {
@@ -61,7 +62,7 @@ export default {
         },
         {
           name: "Profile",
-          // icon: "arrow-alt-right",
+          icon: "user",
           displayName: "Profile",
           showInMenu: true,
           meta: {
@@ -78,4 +79,9 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.matches {
+  padding-left: 5%;
+  padding-top: 0%;
+}
+</style>
