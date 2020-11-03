@@ -80,12 +80,11 @@ export default {
         //   ]
         // }
       ]
-    }
+    };
   }
-}
+};
 </script>
 <style>
-
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans:300,400,400i,500,700|Roboto:300,400,400i,500,700");
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-grid.min.css");
 @import "./style.css";
@@ -105,5 +104,8 @@ export default {
   border: 0;
   border-top: 4px solid #fedf01;
   margin: 2rem 0;
+}
+h1 {
+  font-size: 3.074rem;
 }
 </style>

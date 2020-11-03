@@ -2,57 +2,49 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-           <div class="col-md-8">
+        <div class="col-md-8">
           <header class="mb-3">
             <h1>WheyPal</h1>
           </header>
-           </div>
-          <div class="col-md-8">
+        </div>
+        <div class="col-md-8">
           <rbc-card>
             <div slot="header">
               <h3 class="custom-size">Sign up</h3>
             </div>
-            
+
             <ul class="list-highlight">
               <li class="my-2">
-                <rbc-input 
-                	label="Email" 
-                	placeholder="placeholder@gmail.com"
+                <rbc-input
+                  label="Email"
+                  placeholder="placeholder@gmail.com"
                 ></rbc-input>
               </li>
               <li class="my-2">
-                <rbc-input 
-                	label="Username" 
-                	placeholder="username"
-                ></rbc-input>
+                <rbc-input label="Username" placeholder="username"></rbc-input>
               </li>
               <li class="my-2">
-                <rbc-input 
-                	label="Password" 
-                	placeholder="password"
-                ></rbc-input>
+                <rbc-input label="Password" placeholder="password"></rbc-input>
               </li>
             </ul>
             <div slot="footer">
-                 <rbc-button 
-            	color="primary"
-              class="mr-1"
-            >
-            	Sign up
-              </rbc-button>
-              Already a member?
-              <router-link to="/signIn">
-                <rbc-button 
-                color="primary"
-                outline
-                class="ml-1"
-                >
-                Sign in
-                </rbc-button>
-              </router-link>
+              <div class="row ml-1">
+                <div class="col-md-4">
+                  <rbc-button class="mb-1" color="primary">
+                    Sign up
+                  </rbc-button>
+                  <br />
+                  Already a member?
+                  <router-link to="/signIn">
+                    <rbc-button class="mt-1" color="primary" outline>
+                      Sign in
+                    </rbc-button>
+                  </router-link>
+                </div>
+              </div>
             </div>
           </rbc-card>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -72,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-h1{
+h1 {
   font-size: 3.074rem;
 }
 h3 {

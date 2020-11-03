@@ -1,30 +1,81 @@
 <template>
   <div>
-  
-          <header class="mb-3">
-            <h1>Matches</h1>
-            <hr class="mb-2 header-rule" />
-          </header>
-          
-
+    <rbc-layout
+      top-nav
+      logo="https://i.ibb.co/5GFxj30/handcuffs-2.png"
+      :router="true"
+      :side-nav="sideNav"
+      toggle="full"
+    >
+      <div class="container" slot="content">
+        <div class="row">
+          <div class="col-md-12">
+            <header class="mb-3">
+              <h1>Matches</h1>
+              <hr class="mb-2 header-rule" />
+            </header>
+          </div>
+        </div>
+      </div>
+    </rbc-layout>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { Layout } from "rbc-wm-framework-vuejs/dist/wm/components";
 export default {
-  name: "Discover",
+  name: "Matches",
   components: {
-
+    "rbc-layout": Layout
+  },
+  data() {
+    return {
+      dynamicComponent: "Discover",
+      sideNav: [
+        {
+          name: "Discover",
+          // icon: "arrow-alt-right",
+          displayName: "Discover",
+          showInMenu: true,
+          meta: {
+            order: 0
+          }
+        },
+        {
+          name: "Matches",
+          // icon: "arrow-alt-right",
+          displayName: "Matches",
+          showInMenu: true,
+          meta: {
+            order: 1
+          }
+        },
+        {
+          name: "Messages",
+          // icon: "arrow-alt-right",
+          displayName: "Messages",
+          showInMenu: true,
+          meta: {
+            order: 2
+          }
+        },
+        {
+          name: "Profile",
+          // icon: "arrow-alt-right",
+          displayName: "Profile",
+          showInMenu: true,
+          meta: {
+            order: 3
+          }
+        }
+      ]
+    };
+  },
+  methods: {
+    hi() {
+      return console.log("hi");
+    }
   }
 };
 </script>
-
-<style scoped>
-h1{
-  font-size: 3.074rem;
-}
-h3 {
-  font-size: 2.074rem;
-}
-</style>
+<style></style>

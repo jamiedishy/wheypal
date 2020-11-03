@@ -10,9 +10,10 @@
       <div class="container" slot="content">
         <div class="row">
           <div class="col-md-12">
-            <component
+            <!-- <component
                 :is="dynamicComponent"
-            />  
+            />   -->
+            dashboard
           </div>
         </div>
       </div>
@@ -21,23 +22,15 @@
 </template>
 
 <script>
-import Discover from "./Discover.vue";
-import Matches from "./Matches.vue";
-import Messages from "./Messages.vue";
-import Profile from "./Profile.vue";
 import { Layout } from "rbc-wm-framework-vuejs/dist/wm/components";
 export default {
   name: "Dashboard",
   components: {
-    "rbc-layout": Layout,
-    Discover,
-    Matches,
-    Messages,
-    Profile
+    "rbc-layout": Layout
   },
   data() {
     return {
-        "dynamicComponent": "Discover",
+      dynamicComponent: "Discover",
       sideNav: [
         {
           name: "Discover",
@@ -76,10 +69,13 @@ export default {
           }
         }
       ]
+    };
+  },
+  methods: {
+    hi() {
+      return console.log("hi");
     }
   }
-}
+};
 </script>
-<style>
-
-</style>
+<style></style>

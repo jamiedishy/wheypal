@@ -2,48 +2,44 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-           <div class="col-md-8">
+        <div class="col-md-8">
           <header class="mb-3">
             <h1>Sign in</h1>
           </header>
-           </div>
-          <div class="col-md-8">
+        </div>
+        <div class="col-md-8">
           <rbc-card>
             <ul class="list-highlight">
               <li class="my-2">
-                <rbc-input 
-                	label="Username" 
-                	placeholder="username"
-                    v-model="username"
+                <rbc-input
+                  label="Username"
+                  placeholder="username"
+                  v-model="username"
                 ></rbc-input>
               </li>
               <li class="my-2">
-                <rbc-input 
-                	label="Password" 
-                	placeholder="password"
-                ></rbc-input>
+                <rbc-input label="Password" placeholder="password"></rbc-input>
               </li>
             </ul>
             <div slot="footer">
-                <router-link :to="{ name: 'Dashboard', params: { username: username } }">
-                    <rbc-button 
-                        color="primary"
-                        class="mr-1"
-                    >
-                    	Sign in
+              <div class="row ml-1">
+                <div class="col-md-4">
+                  <router-link to="/discover">
+                    <rbc-button class="mb-1" color="primary">
+                      Sign in
                     </rbc-button>
-                </router-link>
-              Forgot your password? 
-              <rbc-button 
-                color="primary"
-                outline
-                class="ml-1"
-                >
-              Sucks
-              </rbc-button>
+                  </router-link>
+                  <br />
+                  Forgot your password?
+
+                  <rbc-button class="mt-1" color="primary" outline>
+                    Sucks
+                  </rbc-button>
+                </div>
+              </div>
             </div>
           </rbc-card>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -60,15 +56,15 @@ export default {
     "rbc-button": Button
   },
   data() {
-      return {
-          username: ''
-      }
+    return {
+      username: ""
+    };
   }
 };
 </script>
 
 <style scoped>
-h1{
+h1 {
   font-size: 3.074rem;
 }
 h3 {
