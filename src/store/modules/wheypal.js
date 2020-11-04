@@ -23,15 +23,15 @@ const actions = {
     payload["body"] = body;
     commit("CREATE_USER", payload);
   },
-  async getRecommendations({ commit }, token) {
+  async getRecommendations({ commit }, body) {
     console.log("Getting recommendations");
     const url = "http://localhost:8081/user/";
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${body.userToken}`
       }
     });
-    const payload = response.data;
+    const payload = response.data.filter(el => el.email !== body.userEmail);
     commit("GET_RECOMMENDATIONS", payload);
   },
   async loginUser({ commit }, body) {
@@ -67,7 +67,6 @@ const mutations = {
     state.userId = payload.id;
     state.userEmail = payload.body.email;
     state.userPassword = payload.body.password;
-    console.log("the state usertoken in mutation is", state.userToken);
   },
   LOGOFF_USER: state => {
     (state.userRecommendations = null),
@@ -79,7 +78,6 @@ const mutations = {
       (state.userId = null),
       (state.userToken = null),
       (state.userExpiry = null);
-    console.log("logged off", state);
   }
 };
 

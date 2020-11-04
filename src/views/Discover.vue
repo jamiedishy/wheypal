@@ -105,7 +105,8 @@ export default {
   computed: {
     ...mapState({
       userRecommendations: state => state.wheypal.userRecommendations,
-      userToken: state => state.wheypal.userToken
+      userToken: state => state.wheypal.userToken,
+      userEmail: state => state.wheypal.userEmail
     })
   },
   methods: {
@@ -113,8 +114,12 @@ export default {
   },
   async created() {
     this.error = "";
+    const body = {
+      userEmail: this.userEmail,
+      userToken: this.userToken
+    };
     try {
-      await this.getRecommendations(this.userToken);
+      await this.getRecommendations(body);
     } catch (e) {
       this.error = e;
       this.modalIsOpen = !this.modalIsOpen;
