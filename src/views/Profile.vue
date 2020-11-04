@@ -11,6 +11,15 @@
       <div class="container" slot="content">
         <div class="row">
           <div class="col-md-12">
+            <rbc-modal
+              id="basicModal"
+              :active="modalIsOpen"
+              title="Error"
+              :show-button="false"
+              @toggle="modalIsOpen = false"
+            >
+              <p>{{ this.error }}</p>
+            </rbc-modal>
             <header class="mb-3">
               <h1>Profile</h1>
               <hr class="mb-2 header-rule" />
@@ -76,58 +85,26 @@ import {
   Layout,
   Card,
   Button,
-  Input
+  Input,
+  Modal
 } from "rbc-wm-framework-vuejs/dist/wm/components";
 import { mapActions, mapState } from "vuex";
+import sideNav from "../../sidenav.JSON";
 export default {
   name: "Profile",
   components: {
     "rbc-layout": Layout,
     "rbc-card": Card,
     "rbc-button": Button,
-    "rbc-input": Input
+    "rbc-input": Input,
+    "rbc-modal": Modal
   },
   data() {
     return {
       editMode: false,
-      sideNav: [
-        {
-          name: "Discover",
-          icon: "user-friends",
-          displayName: "Discover",
-          showInMenu: true,
-          meta: {
-            order: 0
-          }
-        },
-        {
-          name: "Matches",
-          icon: "star",
-          displayName: "Matches",
-          showInMenu: true,
-          meta: {
-            order: 1
-          }
-        },
-        {
-          name: "Messages",
-          icon: "envelope-open-text",
-          displayName: "Messages",
-          showInMenu: true,
-          meta: {
-            order: 2
-          }
-        },
-        {
-          name: "Profile",
-          icon: "user",
-          displayName: "Profile",
-          showInMenu: true,
-          meta: {
-            order: 3
-          }
-        }
-      ]
+      sideNav: sideNav,
+      error: "",
+      modalIsOpen: false
     };
   },
   computed: {
@@ -141,12 +118,13 @@ export default {
   methods: {
     ...mapActions(["logOffUser"]),
     async signOut() {
+      this.error = "";
       try {
         await this.logOffUser();
-      } catch (e) {
-        console.log(e);
-      } finally {
         this.$router.push("/");
+      } catch (e) {
+        this.error = e;
+        this.modalIsOpen = !this.modalIsOpen;
       }
     }
   }

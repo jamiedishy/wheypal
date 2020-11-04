@@ -84,7 +84,7 @@ import {
   Modal
 } from "rbc-wm-framework-vuejs/dist/wm/components";
 import { mapActions, mapState } from "vuex";
-import json from "../../sample.JSON";
+import sideNav from "../../sidenav.JSON";
 export default {
   name: "Discover",
   components: {
@@ -96,48 +96,10 @@ export default {
   },
   data() {
     return {
-      json: json,
+      sideNav: sideNav,
       dynamicComponent: "Discover",
       error: "",
-      modalIsOpen: false,
-      sideNav: [
-        {
-          name: "Discover",
-          icon: "user-friends",
-          displayName: "Discover",
-          showInMenu: true,
-          meta: {
-            order: 0
-          }
-        },
-        {
-          name: "Matches",
-          icon: "star",
-          displayName: "Matches",
-          showInMenu: true,
-          meta: {
-            order: 1
-          }
-        },
-        {
-          name: "Messages",
-          icon: "envelope-open-text",
-          displayName: "Messages",
-          showInMenu: true,
-          meta: {
-            order: 2
-          }
-        },
-        {
-          name: "Profile",
-          icon: "user",
-          displayName: "Profile",
-          showInMenu: true,
-          meta: {
-            order: 3
-          }
-        }
-      ]
+      modalIsOpen: false
     };
   },
   computed: {

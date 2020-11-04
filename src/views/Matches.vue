@@ -24,6 +24,7 @@
 
 <script>
 import { Layout } from "rbc-wm-framework-vuejs/dist/wm/components";
+import sideNav from "../../sidenav.JSON";
 export default {
   name: "Matches",
   components: {
@@ -32,44 +33,7 @@ export default {
   data() {
     return {
       dynamicComponent: "Discover",
-      sideNav: [
-        {
-          name: "Discover",
-          icon: "user-friends",
-          displayName: "Discover",
-          showInMenu: true,
-          meta: {
-            order: 0
-          }
-        },
-        {
-          name: "Matches",
-          icon: "star",
-          displayName: "Matches",
-          showInMenu: true,
-          meta: {
-            order: 1
-          }
-        },
-        {
-          name: "Messages",
-          icon: "envelope-open-text",
-          displayName: "Messages",
-          showInMenu: true,
-          meta: {
-            order: 2
-          }
-        },
-        {
-          name: "Profile",
-          icon: "user",
-          displayName: "Profile",
-          showInMenu: true,
-          meta: {
-            order: 3
-          }
-        }
-      ]
+      sideNav: sideNav
     };
   },
   methods: {
