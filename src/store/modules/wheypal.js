@@ -14,10 +14,19 @@ const state = {
 
 const getters = {};
 
+var domain;
+
+if (process.env.NODE_ENV === 'development') {
+  domain = 'http://localhost:8081';
+} else {
+  domain = 'http://api.wheypal.com';
+}
+
+
 const actions = {
   async createUser({ commit }, body) {
     console.log("Creating user");
-    const url = "http://localhost:8081/user";
+    const url = domain + "/user";
     const response = await axios.post(url, body);
     const payload = response.data;
     payload["body"] = body;
@@ -25,7 +34,7 @@ const actions = {
   },
   async getRecommendations({ commit }, body) {
     console.log("Getting recommendations");
-    const url = "http://localhost:8081/user";
+    const url = domain + "/user";
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${body.userToken}`
@@ -38,7 +47,7 @@ const actions = {
   },
   async loginUser({ commit }, body) {
     console.log("Login user");
-    const url = "http://localhost:8081/login";
+    const url = domain + "/login";
     const response = await axios.post(url, body);
     const payload = response.data;
     payload["body"] = body;
@@ -50,7 +59,7 @@ const actions = {
   },
   async updateUser({ commit }, body) {
     const data = { "name": `${body.userName}`, "userID": body.userID, "email": `${body.userEmail}` };
-    const url = "http://localhost:8081/user";
+    const url = domain + "/user";
     const config = {
       method: 'put',
       headers: { 
