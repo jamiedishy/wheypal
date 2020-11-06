@@ -21,10 +21,10 @@
               <p>{{ this.error }}</p>
             </modal>
             <div class="row">
-            <header class="col-md-3 ml-3">
-              <h1 style="font-size: 4rem;" class="mt-5">Profile</h1>
-            </header>
-            <img class="col-md-8" src="../assets/profile.png">
+              <header class="col-md-3 ml-3">
+                <h1 style="font-size: 4rem;" class="mt-5">Profile</h1>
+              </header>
+              <img class="col-md-8" src="../assets/profile.png" />
             </div>
             <card>
               <div slot="header">
@@ -34,20 +34,21 @@
                 <ul class="list-highlight">
                   <li class="my-2">
                     <custom-input
-                      label="Username"
-                      placeholder="username"
-                      v-model="username"
+                      label="Name"
+                      placeholder="Update name"
+                      v-model="updateName"
                     ></custom-input>
                   </li>
                   <li class="my-2">
                     <custom-input
-                      label="Password"
-                      placeholder="password"
+                      label="Email"
+                      placeholder="Update email"
+                      v-model="updateEmail"
                     ></custom-input>
                   </li>
                 </ul>
                 <div slot="footer">
-                  <custom-button @click="editMode = !editMode" color="primary">
+                  <custom-button @click="updateCreds()" color="primary">
                     Update
                   </custom-button>
                 </div>
@@ -60,7 +61,7 @@
                   <li class="my-2">
                     Email: {{ userEmail ? userEmail : "Undefined" }}
                   </li>
-                  <li class="my-2">Id: {{ userId ? userId : "Undefined" }}</li>
+                  <li class="my-2">Id: {{ userID ? userID : "Undefined" }}</li>
                   <li class="my-2">
                     Password: {{ userPassword ? userPassword : "Undefined" }}
                   </li>
@@ -95,30 +96,33 @@ import sideNav from "../../sidenav.JSON";
 export default {
   name: "Profile",
   components: {
-    "layout": Layout,
-    "card": Card,
+    layout: Layout,
+    card: Card,
     "custom-button": Button,
     "custom-input": Input,
-    "modal": Modal
+    modal: Modal
   },
   data() {
     return {
       editMode: false,
       sideNav: sideNav,
       error: "",
-      modalIsOpen: false
+      modalIsOpen: false,
+      updateName: "",
+      updateEmail: ""
     };
   },
   computed: {
     ...mapState({
       userName: state => state.wheypal.userName,
-      userId: state => state.wheypal.userId,
+      userID: state => state.wheypal.userId,
       userPassword: state => state.wheypal.userPassword,
-      userEmail: state => state.wheypal.userEmail
+      userEmail: state => state.wheypal.userEmail,
+      userToken: state => state.wheypal.userToken
     })
   },
   methods: {
-    ...mapActions(["logOffUser"]),
+    ...mapActions(["logOffUser", "updateUser"]),
     async signOut() {
       this.error = "";
       try {
@@ -127,6 +131,25 @@ export default {
       } catch (e) {
         this.error = e;
         this.modalIsOpen = !this.modalIsOpen;
+      }
+    },
+    async updateCreds() {
+      this.editMode = !this.editMode;
+      this.error = "";
+      const body = {
+        userName: this.updateName,
+        userToken: this.userToken,
+        userEmail: this.updateEmail,
+        userID: this.userID
+      };
+      try {
+        await this.updateUser(body);
+      } catch (e) {
+        this.error = e;
+        this.modalIsOpen = !this.modalIsOpen;
+      } finally {
+        this.updateName = "";
+        this.updateEmail = "";
       }
     }
   }
