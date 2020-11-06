@@ -32,6 +32,8 @@ const actions = {
       }
     });
     const payload = response.data.filter(el => el.email !== body.userEmail);
+    // console.table(payload)
+    // console.log("%c%s", "background: dodgerblue; padding: 5px; border-radius: 5x", "stylized log!")
     commit("GET_RECOMMENDATIONS", payload);
   },
   async loginUser({ commit }, body) {

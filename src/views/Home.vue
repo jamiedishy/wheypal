@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <rbc-modal
+        <modal
           id="basicModal"
           :active="modalIsOpen"
           title="Error"
@@ -10,58 +10,60 @@
           @toggle="modalIsOpen = false"
         >
           <p>{{ this.error }}</p>
-        </rbc-modal>
-        <div class="col-md-8">
-          <header class="mb-3">
-            <h1>WheyPal</h1>
+        </modal>
+         <div class="row">
+          <header class="col-md-3">
+            <h1 class="mt-5">WheyPal</h1>
           </header>
+          <img class="col-md-8" src="../assets/cyclists.png" />
         </div>
-        <div class="col-md-8">
-          <rbc-card>
+        <hr class="bdr-dark-blue mb-5 mt-3">
+          <card>
             <div slot="header">
               <h3>Sign up</h3>
             </div>
             <ul class="list-highlight">
               <li class="my-2">
-                <rbc-input
+                <custom-input
                   v-model="name"
                   label="Name"
                   placeholder="name"
-                ></rbc-input>
+                ></custom-input>
               </li>
               <li class="my-2">
-                <rbc-input
+                <custom-input
                   v-model="email"
                   label="Email"
                   placeholder="placeholder@gmail.com"
-                ></rbc-input>
+                ></custom-input>
               </li>
               <li class="my-2">
-                <rbc-input
+                <custom-input
                   v-model="password"
                   label="Password"
                   placeholder="password"
-                ></rbc-input>
+                ></custom-input>
               </li>
             </ul>
             <div slot="footer">
               <div class="row ml-1">
                 <div class="col-md-4">
-                  <rbc-button @click="signUp()" class="mb-1" color="primary">
+                  <custom-button @click="signUp()" class="mb-1" color="primary">
                     Sign up
-                  </rbc-button>
+                  </custom-button>
                   <br />
                   Already a member?
+                  <br />
                   <router-link to="/signIn">
-                    <rbc-button class="mt-1" color="primary" outline>
+                    <custom-button class="mt-1" color="primary" outline>
                       Sign in
-                    </rbc-button>
+                    </custom-button>
                   </router-link>
                 </div>
               </div>
             </div>
-          </rbc-card>
-        </div>
+          </card>
+
       </div>
     </div>
   </div>
@@ -79,10 +81,10 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "Home",
   components: {
-    "rbc-card": Card,
-    "rbc-input": Input,
-    "rbc-button": Button,
-    "rbc-modal": Modal
+    "card": Card,
+    "custom-input": Input,
+    "custom-button": Button,
+    "modal": Modal
   },
   data() {
     return {
@@ -90,7 +92,8 @@ export default {
       email: "",
       password: "",
       modalIsOpen: false,
-      error: ""
+      error: "",
+      image: "cyclists.png"
     };
   },
   computed: {
@@ -129,7 +132,14 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 4rem;
+}
 h3 {
   font-size: 2.074rem;
+}
+.header {
+  position: relative;
+  text-align: center;
 }
 </style>

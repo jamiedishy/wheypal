@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <rbc-modal
+        <modal
           id="basicModal"
           :active="modalIsOpen"
           title="Error"
@@ -10,53 +10,53 @@
           @toggle="modalIsOpen = false"
         >
           <p>{{ this.error }}</p>
-        </rbc-modal>
+        </modal>
         <div class="col-md-8">
           <header class="mb-3">
             <h1>WheyPal</h1>
           </header>
         </div>
         <div class="col-md-8">
-          <rbc-card>
+          <card>
             <div slot="header">
               <h3>Sign in</h3>
             </div>
             <ul class="list-highlight">
               <li class="my-2">
-                <rbc-input
+                <custom-input
                   label="Email"
                   placeholder="Email"
                   v-model="email"
-                ></rbc-input>
+                ></custom-input>
               </li>
               <li class="my-2">
-                <rbc-input
+                <custom-input
                   v-model="password"
                   label="Password"
                   placeholder="password"
-                ></rbc-input>
+                ></custom-input>
               </li>
             </ul>
             <div slot="footer">
               <div class="row ml-1">
                 <div class="col-md-4">
-                  <rbc-button
+                  <custom-button
                     @click="signInUser()"
                     class="mb-1"
                     color="primary"
                   >
                     Sign in
-                  </rbc-button>
+                  </custom-button>
                   <br />
                   Forgot your password?
 
-                  <rbc-button class="mt-1" color="primary" outline>
+                  <custom-button class="mt-1" color="primary" outline>
                     Sucks
-                  </rbc-button>
+                  </custom-button>
                 </div>
               </div>
             </div>
-          </rbc-card>
+          </card>
         </div>
       </div>
     </div>
@@ -75,10 +75,10 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "SignIn",
   components: {
-    "rbc-card": Card,
-    "rbc-input": Input,
-    "rbc-button": Button,
-    "rbc-modal": Modal
+    "card": Card,
+    "custom-input": Input,
+    "custom-button": Button,
+    "modal": Modal
   },
   data() {
     return {

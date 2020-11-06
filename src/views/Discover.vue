@@ -1,6 +1,6 @@
 <template>
   <div>
-    <rbc-layout
+    <layout
       top-nav
       logo="https://i.ibb.co/5GFxj30/handcuffs-2.png"
       :router="true"
@@ -11,7 +11,7 @@
       <div class="container" slot="content">
         <div class="row">
           <div class="col-md-12">
-            <rbc-modal
+            <modal
               id="basicModal"
               :active="modalIsOpen"
               title="Error"
@@ -19,11 +19,14 @@
               @toggle="modalIsOpen = false"
             >
               <p>{{ this.error }}</p>
-            </rbc-modal>
-            <header class="mb-3">
-              <h1>Discover</h1>
-              <hr class="mb-2 header-rule" />
+            </modal>
+
+            <div class="row mb-4">
+            <header class="col-md-4 mb-3 ml-1">
+              <h1 style="font-size: 4rem;" class="mt-5">Discover</h1>              
             </header>
+            <img class="col-md-6" src="../assets/discover.png">
+            </div>
 
             <div class="row">
               <div
@@ -31,7 +34,7 @@
                 v-for="(recommendation, index) in userRecommendations"
                 :key="index"
               >
-                <rbc-card class="mb-3">
+                <card class="mb-3">
                   <div slot="header">
                     <h3>
                       Name:
@@ -51,28 +54,28 @@
                     </li>
                   </ul>
                   <div slot="footer">
-                    <rbc-button
+                    <custom-button
                       class="mr-2"
                       icon="thumbs-up"
                       @click="swipeRight()"
                       outline
                     >
-                    </rbc-button>
-                    <rbc-button
+                    </custom-button>
+                    <custom-button
                       class="mr-2"
                       icon="thumbs-down"
                       @click="swipeLeft()"
                       outline
                     >
-                    </rbc-button>
+                    </custom-button>
                   </div>
-                </rbc-card>
+                </card>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </rbc-layout>
+    </layout>
   </div>
 </template>
 
@@ -88,11 +91,10 @@ import sideNav from "../../sidenav.JSON";
 export default {
   name: "Discover",
   components: {
-    "rbc-layout": Layout,
-    "rbc-card": Card,
-    // "rbc-icon": Icon,
-    "rbc-button": Button,
-    "rbc-modal": Modal
+    "layout": Layout,
+    "card": Card,
+    "custom-button": Button,
+    "modal": Modal
   },
   data() {
     return {

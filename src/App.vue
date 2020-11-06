@@ -1,17 +1,9 @@
 <template>
   <div id="app">
-    <!-- <rbc-layout
+    <layout
       top-nav
       logo="https://i.ibb.co/5GFxj30/handcuffs-2.png"
-      :router="true"
-      :side-nav="sideNav"
-      toggle="full"
-      class="my-4"
-    > -->
-    <rbc-layout
-      top-nav
-      logo="https://i.ibb.co/5GFxj30/handcuffs-2.png"
-      class="my-4"
+      class="mt-4 mb-5"
     >
       <div class="container" slot="content">
         <div class="row">
@@ -22,7 +14,7 @@
           </div>
         </div>
       </div>
-    </rbc-layout>
+    </layout>
   </div>
 </template>
 
@@ -36,7 +28,7 @@ import { Layout } from "rbc-wm-framework-vuejs/dist/wm/components";
 export default {
   name: "App",
   components: {
-    "rbc-layout": Layout
+    "layout": Layout
   },
   data() {
     return {

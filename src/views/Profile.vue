@@ -1,6 +1,6 @@
 <template>
   <div>
-    <rbc-layout
+    <layout
       top-nav
       logo="https://i.ibb.co/5GFxj30/handcuffs-2.png"
       :router="true"
@@ -11,7 +11,7 @@
       <div class="container" slot="content">
         <div class="row">
           <div class="col-md-12">
-            <rbc-modal
+            <modal
               id="basicModal"
               :active="modalIsOpen"
               title="Error"
@@ -19,35 +19,37 @@
               @toggle="modalIsOpen = false"
             >
               <p>{{ this.error }}</p>
-            </rbc-modal>
-            <header class="mb-3">
-              <h1>Profile</h1>
-              <hr class="mb-2 header-rule" />
+            </modal>
+            <div class="row">
+            <header class="col-md-4 ml-3">
+              <h1 style="font-size: 4rem;" class="mt-5">Profile</h1>
             </header>
-            <rbc-card>
+            <img class="col-md-6" src="../assets/profile.png">
+            </div>
+            <card>
               <div slot="header">
                 <h3>User preferences</h3>
               </div>
               <template v-if="editMode">
                 <ul class="list-highlight">
                   <li class="my-2">
-                    <rbc-input
+                    <custom-input
                       label="Username"
                       placeholder="username"
                       v-model="username"
-                    ></rbc-input>
+                    ></custom-input>
                   </li>
                   <li class="my-2">
-                    <rbc-input
+                    <custom-input
                       label="Password"
                       placeholder="password"
-                    ></rbc-input>
+                    ></custom-input>
                   </li>
                 </ul>
                 <div slot="footer">
-                  <rbc-button @click="editMode = !editMode" color="primary">
+                  <custom-button @click="editMode = !editMode" color="primary">
                     Update
-                  </rbc-button>
+                  </custom-button>
                 </div>
               </template>
               <template v-else>
@@ -64,19 +66,19 @@
                   </li>
                 </ul>
                 <div slot="footer">
-                  <rbc-button @click="editMode = !editMode" color="primary">
+                  <custom-button @click="editMode = !editMode" color="primary">
                     Edit
-                  </rbc-button>
+                  </custom-button>
                 </div>
               </template>
-            </rbc-card>
-            <rbc-button @click="signOut()" class="mt-2" color="primary">
+            </card>
+            <custom-button @click="signOut()" class="mt-2" color="primary">
               Sign out
-            </rbc-button>
+            </custom-button>
           </div>
         </div>
       </div>
-    </rbc-layout>
+    </layout>
   </div>
 </template>
 
@@ -93,11 +95,11 @@ import sideNav from "../../sidenav.JSON";
 export default {
   name: "Profile",
   components: {
-    "rbc-layout": Layout,
-    "rbc-card": Card,
-    "rbc-button": Button,
-    "rbc-input": Input,
-    "rbc-modal": Modal
+    "layout": Layout,
+    "card": Card,
+    "custom-button": Button,
+    "custom-input": Input,
+    "modal": Modal
   },
   data() {
     return {
@@ -131,6 +133,10 @@ export default {
 };
 </script>
 <style>
+h1 {
+  font-size: 4rem;
+}
+
 .profile {
   padding-left: 5%;
   padding-top: 0%;
