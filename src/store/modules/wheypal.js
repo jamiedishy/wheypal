@@ -27,7 +27,6 @@ const actions = {
   async createUser({ commit }, body) {
     console.log("Creating user");
     const url = domain + "/user";
-    // const url = '/user'
     const response = await axios.post(url, body);
     const payload = response.data;
     payload["body"] = body;
@@ -43,7 +42,7 @@ const actions = {
     });
     const payload = response.data.filter(el => el.email !== body.userEmail);
     // console.table(payload)
-    // console.log("%c%s", "background: dodgerblue; padding: 5px; border-radius: 5x", "stylized log!")
+    // console.log("%c%s", "background: dodgerblue; padding: 5px; border-radius: 5x", "stylized log lol")
     commit("GET_RECOMMENDATIONS", payload);
   },
   async loginUser({ commit }, body) {
@@ -57,7 +56,21 @@ const actions = {
   async logOffUser({ commit }) {
     console.log("Sign out user");
     commit("LOGOFF_USER");
-  }
+  },
+  async updateUser({ commit }, body) {
+    const data = { "name": `${body.userName}`, "userID": body.userID, "email": `${body.userEmail}` };
+    const url = domain + "/user";
+    const config = {
+      method: 'put',
+      headers: { 
+        'Authorization': `Bearer ${body.userToken}`
+      },
+      data : data
+    };
+    const response = await axios(url, config);
+    const payload = response.data;
+    commit("UPDATE_USER", payload);
+  },
 };
 
 const mutations = {
@@ -90,6 +103,10 @@ const mutations = {
       (state.userId = null),
       (state.userToken = null),
       (state.userExpiry = null);
+  },
+  UPDATE_USER: (state, payload) => {
+      state.userName = payload.name,
+      state.userEmail = payload.email
   }
 };
 
