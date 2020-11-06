@@ -11,59 +11,58 @@
         >
           <p>{{ this.error }}</p>
         </modal>
-         <div class="row">
+        <div class="row">
           <header class="col-md-4">
             <h1 class="mt-5 ml-2">WheyPal</h1>
           </header>
           <img class="col-md-7" src="../assets/cyclists.png" />
         </div>
-        <hr class="bdr-dark-blue mb-5 mt-3">
-          <card>
-            <div slot="header">
-              <h3>Sign up</h3>
-            </div>
-            <ul class="list-highlight">
-              <li class="my-2">
-                <custom-input
-                  v-model="name"
-                  label="Name"
-                  placeholder="Name"
-                ></custom-input>
-              </li>
-              <li class="my-2">
-                <custom-input
-                  v-model="email"
-                  label="Email"
-                  placeholder="placeholder@placeholder.ca"
-                ></custom-input>
-              </li>
-              <li class="my-2">
-                <custom-input
-                  v-model="password"
-                  label="Password"
-                  placeholder="Password"
-                ></custom-input>
-              </li>
-            </ul>
-            <div slot="footer">
-              <div class="row ml-1">
-                <div class="col-md-4">
-                  <custom-button @click="signUp()" class="mb-1" color="primary">
-                    Sign up
+        <!-- <hr class="bdr-dark-blue mb-5 mt-3"> -->
+        <card>
+          <div slot="header">
+            <h3>Sign up</h3>
+          </div>
+          <ul class="list-highlight">
+            <li class="my-2">
+              <custom-input
+                v-model="name"
+                label="Name"
+                placeholder="Name"
+              ></custom-input>
+            </li>
+            <li class="my-2">
+              <custom-input
+                v-model="email"
+                label="Email"
+                placeholder="placeholder@placeholder.ca"
+              ></custom-input>
+            </li>
+            <li class="my-2">
+              <custom-input
+                v-model="password"
+                label="Password"
+                placeholder="Password"
+              ></custom-input>
+            </li>
+          </ul>
+          <div slot="footer">
+            <div class="row ml-1">
+              <div class="col-md-4">
+                <custom-button @click="signUp()" class="mb-1" color="primary">
+                  Sign up
+                </custom-button>
+                <br />
+                Already a member?
+                <br />
+                <router-link to="/signIn">
+                  <custom-button class="mt-1" color="primary" outline>
+                    Sign in
                   </custom-button>
-                  <br />
-                  Already a member?
-                  <br />
-                  <router-link to="/signIn">
-                    <custom-button class="mt-1" color="primary" outline>
-                      Sign in
-                    </custom-button>
-                  </router-link>
-                </div>
+                </router-link>
               </div>
             </div>
-          </card>
-
+          </div>
+        </card>
       </div>
     </div>
   </div>
@@ -81,10 +80,10 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "Home",
   components: {
-    "card": Card,
+    card: Card,
     "custom-input": Input,
     "custom-button": Button,
-    "modal": Modal
+    modal: Modal
   },
   data() {
     return {
