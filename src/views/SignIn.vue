@@ -11,12 +11,19 @@
         >
           <p>{{ this.error }}</p>
         </modal>
-        <div class="col-md-8">
-          <header class="mb-3">
-            <h1>WheyPal</h1>
+     <!-- <div class="row">
+            <header class="col-md-3 ml-3">
+              <h1 style="font-size: 4rem;" class="mt-5">Profile</h1>
+            </header>
+            <img class="col-md-8" src="../assets/profile.png">
+            </div> -->
+          <div class="row">
+          <header class="col-md-4 ml-2">
+            <h1 style="font-size: 4rem;" class="mt-5">WheyPal</h1>
           </header>
-        </div>
-        <div class="col-md-8">
+          <img class="col-md-6" src="../assets/weights.png">
+       </div>
+       <hr class="bdr-dark-blue mb-5 mt-3">
           <card>
             <div slot="header">
               <h3>Sign in</h3>
@@ -25,7 +32,7 @@
               <li class="my-2">
                 <custom-input
                   label="Email"
-                  placeholder="Email"
+                  placeholder="placeholder@placeholder.ca"
                   v-model="email"
                 ></custom-input>
               </li>
@@ -33,7 +40,7 @@
                 <custom-input
                   v-model="password"
                   label="Password"
-                  placeholder="password"
+                  placeholder="Password"
                 ></custom-input>
               </li>
             </ul>
@@ -49,15 +56,16 @@
                   </custom-button>
                   <br />
                   Forgot your password?
-
-                  <custom-button class="mt-1" color="primary" outline>
-                    Sucks
-                  </custom-button>
+                  <br />
+                  <router-link to="/">
+                    <custom-button class="mt-1" color="primary" outline>
+                       Sucks
+                    </custom-button>
+                  </router-link>
                 </div>
               </div>
             </div>
           </card>
-        </div>
       </div>
     </div>
   </div>

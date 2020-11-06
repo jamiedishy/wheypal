@@ -12,10 +12,10 @@
           <p>{{ this.error }}</p>
         </modal>
          <div class="row">
-          <header class="col-md-3">
-            <h1 class="mt-5">WheyPal</h1>
+          <header class="col-md-4">
+            <h1 class="mt-5 ml-2">WheyPal</h1>
           </header>
-          <img class="col-md-8" src="../assets/cyclists.png" />
+          <img class="col-md-7" src="../assets/cyclists.png" />
         </div>
         <hr class="bdr-dark-blue mb-5 mt-3">
           <card>
@@ -27,21 +27,21 @@
                 <custom-input
                   v-model="name"
                   label="Name"
-                  placeholder="name"
+                  placeholder="Name"
                 ></custom-input>
               </li>
               <li class="my-2">
                 <custom-input
                   v-model="email"
                   label="Email"
-                  placeholder="placeholder@gmail.com"
+                  placeholder="placeholder@placeholder.ca"
                 ></custom-input>
               </li>
               <li class="my-2">
                 <custom-input
                   v-model="password"
                   label="Password"
-                  placeholder="password"
+                  placeholder="Password"
                 ></custom-input>
               </li>
             </ul>

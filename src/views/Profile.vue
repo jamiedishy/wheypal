@@ -21,10 +21,10 @@
               <p>{{ this.error }}</p>
             </modal>
             <div class="row">
-            <header class="col-md-4 ml-3">
+            <header class="col-md-3 ml-3">
               <h1 style="font-size: 4rem;" class="mt-5">Profile</h1>
             </header>
-            <img class="col-md-6" src="../assets/profile.png">
+            <img class="col-md-8" src="../assets/profile.png">
             </div>
             <card>
               <div slot="header">

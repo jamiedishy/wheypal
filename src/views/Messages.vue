@@ -12,10 +12,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="row mb-4">
-            <header class="col-md-4 mb-3">
+            <header class="col-md-5 mb-3">
               <h1 style="font-size: 4rem;" class="mt-5">Messages</h1>
             </header>
-            <img class="col-md-6" src="../assets/cyclists.png">
+            <img class="col-md-6" src="../assets/messages.png">
             </div>
 
             <table
