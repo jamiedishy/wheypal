@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12 centre">
         <header>
-          <img class="mb-1" src="../assets/logo.png" />
+          <img class="col-md-6 mb-1" src="../assets/cyclists.png" />
           <h1>WheyPal</h1>
         </header>
         <!-- <img class="col-md-7" src="../assets/cyclists.png" /> -->
@@ -11,8 +11,7 @@
         <div class="my-5">
           <h2>
             WheyPal is a community-based platform that drives motivation through
-            companionship by connecting users based on similar exercise
-            routines, fitness goals, locations and user preferences.
+            companionship by empowering users to exercise together.
           </h2>
         </div>
         <div>
