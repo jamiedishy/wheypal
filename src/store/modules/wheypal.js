@@ -9,7 +9,10 @@ const state = {
   userPassword: null,
   userId: null,
   userToken: null,
-  userExpiry: null
+  userExpiry: null,
+  userBirthday: null,
+  userInterest: null,
+  userLocation: null
 };
 
 const getters = {};
@@ -56,9 +59,9 @@ const actions = {
     console.log("Sign out user");
     commit("LOGOFF_USER");
   },
-  async updateUser({ commit }, body) {
-    const data = { "name": `${body.userName}`, "userID": body.userID, "email": `${body.userEmail}` };
-    const url = domain + "/user";
+  async updateLogin({ commit }, body) {
+    const data = { "password": `${body.userPassword}`, "userID": body.userID, "email": `${body.userEmail}` };
+    const url = domain + "/login";
     const config = {
       method: 'put',
       headers: { 
@@ -66,9 +69,11 @@ const actions = {
       },
       data : data
     };
-    const response = await axios(url, config);
-    const payload = response.data;
-    commit("UPDATE_USER", payload);
+    await axios(url, config); // boolean
+    // const response = await axios(url, config); // boolean
+    // const payload = response.data;
+    // payload["body"] = body;
+    commit("UPDATE_LOGIN", body);
   },
 };
 
@@ -81,6 +86,9 @@ const mutations = {
     state.userName = payload.body.name;
     state.userEmail = payload.body.email;
     state.userPassword = payload.body.password;
+    state.userInterest = payload.body.interest;
+    state.userLocation = payload.body.location;
+    state.userBirthday = payload.body.birthday;
   },
   GET_RECOMMENDATIONS: (state, payload) => {
     state.userRecommendations = payload;
@@ -91,21 +99,19 @@ const mutations = {
     state.userId = payload.id;
     state.userEmail = payload.body.email;
     state.userPassword = payload.body.password;
+    state.userLocation = payload.location;
+    state.userBirthday = payload.birthday;
+    state.userInterest = payload.interest;
+    state.userName = payload.name;
   },
   LOGOFF_USER: state => {
-    (state.userRecommendations = null),
-      (state.userPreferences = null),
-      (state.userProfileImage = null),
-      (state.userName = null),
-      (state.userEmail = null),
-      (state.userPassword = null),
-      (state.userId = null),
-      (state.userToken = null),
-      (state.userExpiry = null);
+    Object.keys(state).forEach(el => {
+      state[el] = null;
+    })
   },
-  UPDATE_USER: (state, payload) => {
-      state.userName = payload.name,
-      state.userEmail = payload.email
+  UPDATE_LOGIN: (state, payload) => {
+    state.userPassword = payload.password;
+    state.userEmail = payload.email
   }
 };
 

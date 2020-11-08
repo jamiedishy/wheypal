@@ -45,10 +45,18 @@
                   </div>
                   <ul class="list-highlight">
                     <li class="my-2">
-                      Email:
+                      Interest:
                       {{
-                        recommendation.email
-                          ? recommendation.email
+                        recommendation.interest
+                          ? recommendation.interest
+                          : "Undefined"
+                      }}
+                    </li>
+                    <li class="my-2">
+                      Location:
+                      {{
+                        recommendation.location
+                          ? recommendation.location
                           : "Undefined"
                       }}
                     </li>

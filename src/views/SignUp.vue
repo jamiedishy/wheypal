@@ -47,6 +47,27 @@
                 type="password"
               ></custom-input>
             </li>
+            <li class="my-2">
+              <custom-input
+                v-model="birthday"
+                label="Birthday"
+                placeholder="Birthday"
+              ></custom-input>
+            </li>
+            <li class="my-2">
+              <custom-input
+                v-model="interest"
+                label="Interest"
+                placeholder="Interest"
+              ></custom-input>
+            </li>
+            <li class="my-2">
+              <custom-input
+                v-model="location"
+                label="Location"
+                placeholder="Location"
+              ></custom-input>
+            </li>
           </ul>
           <div slot="footer">
             <div class="row ml-1">
@@ -97,6 +118,9 @@ export default {
       name: "",
       email: "",
       password: "",
+      birthday: "",
+      interest: "",
+      location: "",
       modalIsOpen: false,
       error: "",
       image: "cyclists.png",
@@ -112,7 +136,14 @@ export default {
     ...mapActions(["createUser"]),
 
     checkForm() {
-      if (this.name === "" || this.password === "" || this.email === "") {
+      if (
+        this.name === "" ||
+        this.password === "" ||
+        this.email === "" ||
+        this.birthday === "" ||
+        this.interest === "" ||
+        this.location === ""
+      ) {
         this.error = "Field required.";
         this.modalIsOpen = !this.modalIsOpen;
       } else if (!this.validEmail(this.email)) {
@@ -133,7 +164,10 @@ export default {
       const body = {
         name: this.name,
         email: this.email,
-        password: this.password
+        password: this.password,
+        birthday: this.birthday,
+        location: this.location,
+        interest: this.interest
       };
       try {
         await this.createUser(body);

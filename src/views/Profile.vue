@@ -30,48 +30,34 @@
               <div slot="header">
                 <h3>User preferences</h3>
               </div>
-              <template v-if="editMode">
-                <ul class="list-highlight">
-                  <li class="my-2">
-                    <custom-input
-                      label="Name"
-                      placeholder="Update name"
-                      v-model="updateName"
-                    ></custom-input>
-                  </li>
-                  <li class="my-2">
-                    <custom-input
-                      label="Email"
-                      placeholder="Update email"
-                      v-model="updateEmail"
-                    ></custom-input>
-                  </li>
-                </ul>
-                <div slot="footer">
-                  <custom-button @click="updateCreds()" color="primary">
-                    Update
+              <ul class="list-highlight">
+                <li class="my-2">
+                  Name: {{ userName ? userName : "Undefined" }}
+                </li>
+                <!-- <li class="my-2">
+                  Email: {{ userEmail ? userEmail : "Undefined" }}
+                </li> -->
+                <li class="my-2">Id: {{ userID ? userID : "Undefined" }}</li>
+                <!-- <li class="my-2">
+                  Password: {{ userPassword ? userPassword : "Undefined" }}
+                </li> -->
+                <li class="my-2">
+                  Birthday: {{ userBirthday ? userBirthday : "Undefined" }}
+                </li>
+                <li class="my-2">
+                  Interest: {{ userInterest ? userInterest : "Undefined" }}
+                </li>
+                <li class="my-2">
+                  Location: {{ userLocation ? userLocation : "Undefined" }}
+                </li>
+              </ul>
+              <div slot="footer">
+                <router-link to="/account">
+                  <custom-button color="primary">
+                    Update login credentials
                   </custom-button>
-                </div>
-              </template>
-              <template v-else>
-                <ul class="list-highlight">
-                  <li class="my-2">
-                    Name: {{ userName ? userName : "Undefined" }}
-                  </li>
-                  <li class="my-2">
-                    Email: {{ userEmail ? userEmail : "Undefined" }}
-                  </li>
-                  <li class="my-2">Id: {{ userID ? userID : "Undefined" }}</li>
-                  <li class="my-2">
-                    Password: {{ userPassword ? userPassword : "Undefined" }}
-                  </li>
-                </ul>
-                <div slot="footer">
-                  <custom-button @click="editMode = !editMode" color="primary">
-                    Edit
-                  </custom-button>
-                </div>
-              </template>
+                </router-link>
+              </div>
             </card>
             <custom-button @click="signOut()" class="mt-2" color="primary">
               Sign out
@@ -88,7 +74,6 @@ import {
   Layout,
   Card,
   Button,
-  Input,
   Modal
 } from "rbc-wm-framework-vuejs/dist/wm/components";
 import { mapActions, mapState } from "vuex";
@@ -99,12 +84,10 @@ export default {
     layout: Layout,
     card: Card,
     "custom-button": Button,
-    "custom-input": Input,
     modal: Modal
   },
   data() {
     return {
-      editMode: false,
       sideNav: sideNav,
       error: "",
       modalIsOpen: false,
@@ -118,11 +101,14 @@ export default {
       userID: state => state.wheypal.userId,
       userPassword: state => state.wheypal.userPassword,
       userEmail: state => state.wheypal.userEmail,
-      userToken: state => state.wheypal.userToken
+      userToken: state => state.wheypal.userToken,
+      userBirthday: state => state.wheypal.userBirthday,
+      userLocation: state => state.wheypal.userLocation,
+      userInterest: state => state.wheypal.userInterest
     })
   },
   methods: {
-    ...mapActions(["logOffUser", "updateUser"]),
+    ...mapActions(["logOffUser"]),
     async signOut() {
       this.error = "";
       try {
@@ -131,25 +117,6 @@ export default {
       } catch (e) {
         this.error = e;
         this.modalIsOpen = !this.modalIsOpen;
-      }
-    },
-    async updateCreds() {
-      this.editMode = !this.editMode;
-      this.error = "";
-      const body = {
-        userName: this.updateName,
-        userToken: this.userToken,
-        userEmail: this.updateEmail,
-        userID: this.userID
-      };
-      try {
-        await this.updateUser(body);
-      } catch (e) {
-        this.error = e;
-        this.modalIsOpen = !this.modalIsOpen;
-      } finally {
-        this.updateName = "";
-        this.updateEmail = "";
       }
     }
   }

@@ -7,6 +7,7 @@ import Matches from "../views/Matches.vue"
 import Profile from "../views/Profile.vue"
 import Discover from "../views/Discover.vue"
 import Messages from "../views/Messages.vue"
+import Account from "../views/Account.vue"
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,11 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account
   },
   {
     path: "/messages",
