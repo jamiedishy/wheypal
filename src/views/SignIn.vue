@@ -54,7 +54,7 @@
                 <br />
                 Forgot your password?
                 <br />
-                <router-link to="/">
+                <router-link to="/signup">
                   <custom-button class="mt-1" color="primary" outline>
                     Sucks
                   </custom-button>

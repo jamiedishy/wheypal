@@ -85,7 +85,7 @@ import {
 } from "rbc-wm-framework-vuejs/dist/wm/components";
 import { mapActions, mapState } from "vuex";
 export default {
-  name: "Home",
+  name: "SignUp",
   components: {
     card: Card,
     "custom-input": Input,
@@ -109,7 +109,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["createUser", "logoffUser"]),
+    ...mapActions(["createUser"]),
 
     checkForm() {
       if (this.name === "" || this.password === "" || this.email === "") {
@@ -142,9 +142,6 @@ export default {
         this.error = e;
         this.modalIsOpen = !this.modalIsOpen;
       }
-    },
-    mounted() {
-      this.logoffUser(); // clear all states
     }
   }
 };
