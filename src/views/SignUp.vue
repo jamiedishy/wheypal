@@ -48,11 +48,7 @@
               ></custom-input>
             </li>
             <li class="my-2">
-              <custom-input
-                v-model="birthday"
-                label="Birthday"
-                placeholder="Birthday"
-              ></custom-input>
+              <date-picker v-model="birthday" label="Birthday"></date-picker>
             </li>
             <li class="my-2">
               <custom-input
@@ -102,7 +98,8 @@ import {
   Card,
   Input,
   Button,
-  Modal
+  Modal,
+  DatePicker
 } from "rbc-wm-framework-vuejs/dist/wm/components";
 import { mapActions, mapState } from "vuex";
 export default {
@@ -111,7 +108,8 @@ export default {
     card: Card,
     "custom-input": Input,
     "custom-button": Button,
-    modal: Modal
+    modal: Modal,
+    "date-picker": DatePicker
   },
   data() {
     return {
@@ -165,7 +163,7 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        birthday: this.birthday,
+        birthday: `${this.birthday}`,
         location: this.location,
         interest: this.interest
       };
