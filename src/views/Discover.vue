@@ -22,10 +22,10 @@
             </modal>
 
             <div class="row mb-4">
-            <header class="col-md-4 mb-3 ml-1">
-              <h1 style="font-size: 4rem;" class="mt-5">Discover</h1>              
-            </header>
-            <img class="col-md-6" src="../assets/discover.png">
+              <header class="col-md-4 mb-3 ml-1">
+                <h1 style="font-size: 4rem;" class="mt-5">Discover</h1>
+              </header>
+              <img class="col-md-6" src="../assets/discover.png" />
             </div>
 
             <div class="row">
@@ -91,10 +91,10 @@ import sideNav from "../../sidenav.JSON";
 export default {
   name: "Discover",
   components: {
-    "layout": Layout,
-    "card": Card,
+    layout: Layout,
+    card: Card,
     "custom-button": Button,
-    "modal": Modal
+    modal: Modal
   },
   data() {
     return {
@@ -108,7 +108,7 @@ export default {
     ...mapState({
       userRecommendations: state => state.wheypal.userRecommendations,
       userToken: state => state.wheypal.userToken,
-      userEmail: state => state.wheypal.userEmail
+      userID: state => state.wheypal.userId
     })
   },
   methods: {
@@ -117,7 +117,7 @@ export default {
   async created() {
     this.error = "";
     const body = {
-      userEmail: this.userEmail,
+      userID: this.userID,
       userToken: this.userToken
     };
     try {

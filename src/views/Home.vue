@@ -34,7 +34,8 @@
               <custom-input
                 v-model="email"
                 label="Email"
-                placeholder="placeholder@placeholder.ca"
+                placeholder="Email"
+                type="email"
               ></custom-input>
             </li>
             <li class="my-2">
@@ -42,13 +43,19 @@
                 v-model="password"
                 label="Password"
                 placeholder="Password"
+                secure="true"
+                type="password"
               ></custom-input>
             </li>
           </ul>
           <div slot="footer">
             <div class="row ml-1">
               <div class="col-md-4">
-                <custom-button @click="signUp()" class="mb-1" color="primary">
+                <custom-button
+                  @click="checkForm()"
+                  class="mb-1"
+                  color="primary"
+                >
                   Sign up
                 </custom-button>
                 <br />
@@ -92,7 +99,8 @@ export default {
       password: "",
       modalIsOpen: false,
       error: "",
-      image: "cyclists.png"
+      image: "cyclists.png",
+      emailRegex: `/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z\0-9]+.)+[a-zA-Z]{2,}))$/`
     };
   },
   computed: {
@@ -103,6 +111,23 @@ export default {
   methods: {
     ...mapActions(["createUser", "logoffUser"]),
 
+    checkForm() {
+      if (this.name === "" || this.password === "" || this.email === "") {
+        this.error = "Field required.";
+        this.modalIsOpen = !this.modalIsOpen;
+      } else if (!this.validEmail(this.email)) {
+        this.error = "Valid email required.";
+        this.modalIsOpen = !this.modalIsOpen;
+      } else {
+        this.signUp();
+      }
+    },
+
+    validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
     async signUp() {
       this.error = "";
       const body = {
@@ -110,17 +135,12 @@ export default {
         email: this.email,
         password: this.password
       };
-      if (body.name === "" || body.email === "" || body.password === "") {
-        this.error = "Cannot sign up. Please enter all credentials.";
+      try {
+        await this.createUser(body);
+        this.$router.push("/discover");
+      } catch (e) {
+        this.error = e;
         this.modalIsOpen = !this.modalIsOpen;
-      } else {
-        try {
-          await this.createUser(body);
-          this.$router.push("/discover");
-        } catch (e) {
-          this.error = e;
-          this.modalIsOpen = !this.modalIsOpen;
-        }
       }
     },
     mounted() {

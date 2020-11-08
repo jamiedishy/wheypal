@@ -26,8 +26,9 @@
             <li class="my-2">
               <custom-input
                 label="Email"
-                placeholder="placeholder@placeholder.ca"
+                placeholder="Email"
                 v-model="email"
+                type="email"
               ></custom-input>
             </li>
             <li class="my-2">
@@ -35,6 +36,8 @@
                 v-model="password"
                 label="Password"
                 placeholder="Password"
+                type="password"
+                secure="true"
               ></custom-input>
             </li>
           </ul>
@@ -42,7 +45,7 @@
             <div class="row ml-1">
               <div class="col-md-4">
                 <custom-button
-                  @click="signInUser()"
+                  @click="checkForm()"
                   class="mb-1"
                   color="primary"
                 >
@@ -99,25 +102,35 @@ export default {
   methods: {
     ...mapActions(["loginUser"]),
 
+    checkForm() {
+      if (this.password === "" || this.email === "") {
+        this.error = "Field required.";
+        this.modalIsOpen = !this.modalIsOpen;
+      } else if (!this.validEmail(this.email)) {
+        this.error = "Valid email required.";
+        this.modalIsOpen = !this.modalIsOpen;
+      } else {
+        this.signInUser();
+      }
+    },
+
+    validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
     async signInUser() {
       this.error = "";
       const body = {
         email: this.email,
         password: this.password
       };
-      console.log(body.email);
-      console.log(body.password);
-      if (body.email === "" || body.password === "") {
-        this.error = "Cannot sign in. Please enter all credentials.";
+      try {
+        await this.loginUser(body);
+        this.$router.push("/discover");
+      } catch (e) {
+        this.error = e;
         this.modalIsOpen = !this.modalIsOpen;
-      } else {
-        try {
-          await this.loginUser(body);
-          this.$router.push("/discover");
-        } catch (e) {
-          this.error = e;
-          this.modalIsOpen = !this.modalIsOpen;
-        }
       }
     }
   }

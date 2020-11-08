@@ -39,7 +39,7 @@ const actions = {
         Authorization: `Bearer ${body.userToken}`
       }
     });
-    const payload = response.data.filter(el => el.email !== body.userEmail);
+    const payload = response.data.filter(el => el.userID !== body.userID);
     // console.table(payload)
     // console.log("%c%s", "background: dodgerblue; padding: 5px; border-radius: 5x", "stylized log lol")
     commit("GET_RECOMMENDATIONS", payload);
