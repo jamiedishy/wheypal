@@ -17,7 +17,7 @@
           </header>
           <img class="col-md-7" src="../assets/cyclists.png" />
         </div>
-        <!-- <hr class="bdr-dark-blue mb-5 mt-3"> -->
+
         <card>
           <div slot="header">
             <h3>Sign up</h3>
@@ -48,14 +48,27 @@
               ></custom-input>
             </li>
             <li class="my-2">
-              <date-picker v-model="birthday" label="Birthday"></date-picker>
+              <date-picker
+                :format="'MM/dd/yyyy'"
+                placeholder="mm/dd/yyyy"
+                :required="true"
+                v-model="birthday"
+                label="Birthday"
+                :typeable="false"
+              ></date-picker>
             </li>
             <li class="my-2">
-              <custom-input
+              <autocomplete
+                id="interests"
                 v-model="interest"
-                label="Interest"
-                placeholder="Interest"
-              ></custom-input>
+                label="Interests"
+                placeholder="Interests"
+                trigger-after="0"
+                :options="options"
+                :show-all="true"
+                help-text="Select from the listed options."
+                :display-key="false"
+              ></autocomplete>
             </li>
             <li class="my-2">
               <custom-input
@@ -99,6 +112,7 @@ import {
   Input,
   Button,
   Modal,
+  Autocomplete,
   DatePicker
 } from "rbc-wm-framework-vuejs/dist/wm/components";
 import { mapActions, mapState } from "vuex";
@@ -109,7 +123,8 @@ export default {
     "custom-input": Input,
     "custom-button": Button,
     modal: Modal,
-    "date-picker": DatePicker
+    "date-picker": DatePicker,
+    autocomplete: Autocomplete
   },
   data() {
     return {
@@ -122,7 +137,12 @@ export default {
       modalIsOpen: false,
       error: "",
       image: "cyclists.png",
-      emailRegex: `/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z\0-9]+.)+[a-zA-Z]{2,}))$/`
+      emailRegex: `/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z\0-9]+.)+[a-zA-Z]{2,}))$/`,
+      options: [
+        { key: "interest1", value: "Cycling" },
+        { key: "interest2", value: "Running" },
+        { key: "interest3", value: "Weights" }
+      ]
     };
   },
   computed: {
@@ -163,9 +183,9 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        birthday: `${this.birthday}`,
+        birthday: `${this.birthday.toString().slice(0, 15)}`,
         location: this.location,
-        interest: this.interest
+        interest: this.interest.value
       };
       try {
         await this.createUser(body);

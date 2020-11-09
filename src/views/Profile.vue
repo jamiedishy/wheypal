@@ -45,7 +45,8 @@
                   Birthday: {{ userBirthday ? userBirthday : "Undefined" }}
                 </li>
                 <li class="my-2">
-                  Interest: {{ userInterest ? userInterest : "Undefined" }}
+                  Interest:
+                  {{ userInterest ? userInterest : "Undefined" }}
                 </li>
                 <li class="my-2">
                   Location: {{ userLocation ? userLocation : "Undefined" }}

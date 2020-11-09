@@ -28,12 +28,6 @@ const routes = [
     component: SignIn
   },
   {
-    path: "/dashboard/:username",
-    name: "Dashboard",
-    component: Dashboard,
-    props: true
-  },
-  {
     path: "/matches",
     name: "Matches",
     component: Matches

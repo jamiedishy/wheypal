@@ -27,12 +27,11 @@ if (process.env.NODE_ENV === 'development') {
 
 const actions = {
   async createUser({ commit }, body) {
-    console.log("Creating user", body);
+    console.log("Creating user");
     const url = domain + "/user";
     const response = await axios.post(url, body);
     const payload = response.data;
     payload["body"] = body;
-    console.log(payload)
     commit("CREATE_USER", payload);
   },
   async getRecommendations({ commit }, body) {
