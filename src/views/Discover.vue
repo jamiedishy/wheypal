@@ -67,6 +67,7 @@
                       icon="thumbs-up"
                       @click="swipeRight()"
                       outline
+                      @click="sendMessage()"
                     >
                     </custom-button>
                     <custom-button
@@ -109,8 +110,22 @@ export default {
       sideNav: sideNav,
       dynamicComponent: "Discover",
       error: "",
-      modalIsOpen: false
+      modalIsOpen: false,
+      count: 0,
+      textarea: '',
+      message: ''
     };
+  },
+  sockets:{
+    connect () {
+      console.log('connected to chat server')
+    },
+    count (val) {
+      this.count = val.count
+    },
+    message (data) { // this function gets triggered once a socket event of `message` is received
+      this.textarea += data + '\n' // append each new message to the textarea and add a line break
+    }
   },
   computed: {
     ...mapState({
@@ -120,7 +135,12 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getRecommendations"])
+    ...mapActions(["getRecommendations"]),
+    sendMessage () {
+      // this will emit a socket event of type `function`
+      this.$socket.emit('message', this.message) // send the content of the message bar to the server
+      this.message = '' // empty the message bar
+    }
   },
   async created() {
     this.error = "";
