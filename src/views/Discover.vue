@@ -65,15 +65,13 @@
                     <custom-button
                       class="mr-2"
                       icon="thumbs-up"
-                      @click="swipeRight()"
                       outline
-                      @click="sendMessage()"
                     >
                     </custom-button>
                     <custom-button
                       class="mr-2"
                       icon="thumbs-down"
-                      @click="swipeLeft()"
+                      @click="dislike(recommendation.userID)"
                       outline
                     >
                     </custom-button>
@@ -95,7 +93,7 @@ import {
   Button,
   Modal
 } from "rbc-wm-framework-vuejs/dist/wm/components";
-import { mapActions, mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import sideNav from "../../sidenav.JSON";
 export default {
   name: "Discover",
@@ -111,21 +109,9 @@ export default {
       dynamicComponent: "Discover",
       error: "",
       modalIsOpen: false,
-      count: 0,
-      textarea: '',
-      message: ''
+      recommendations: '',
+      message: 'clicked button!'
     };
-  },
-  sockets:{
-    connect () {
-      console.log('connected to chat server')
-    },
-    count (val) {
-      this.count = val.count
-    },
-    message (data) { // this function gets triggered once a socket event of `message` is received
-      this.textarea += data + '\n' // append each new message to the textarea and add a line break
-    }
   },
   computed: {
     ...mapState({
@@ -135,15 +121,29 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getRecommendations"]),
-    sendMessage () {
-      // this will emit a socket event of type `function`
-      this.$socket.emit('message', this.message) // send the content of the message bar to the server
-      this.message = '' // empty the message bar
+    ...mapActions(["getRecommendations", "removeRecommendation"]),
+    async dislike(id) {
+      const body = {
+        userRecommendations: this.userRecommendations,
+        id: id
+      }
+      try {
+        await this.$socket.emit('removeDislikedRecommendation', body) // server performs logic update
+      } catch (e) {
+        this.error = e;
+        this.modalIsOpen = !this.modalIsOpen;
+      }
     }
   },
-  async created() {
-    this.error = "";
+  sockets:{
+    connect () {
+      console.log('Connected to server')
+    },
+    updateRecommendation (data) { // server passes updated recommendations 
+      this.removeRecommendation(data); // update store with new recommendations
+    }
+  },
+  async mounted(){
     const body = {
       userID: this.userID,
       userToken: this.userToken

@@ -47,6 +47,9 @@ const actions = {
     // console.log("%c%s", "background: dodgerblue; padding: 5px; border-radius: 5x", "stylized log lol")
     commit("GET_RECOMMENDATIONS", payload);
   },
+  removeRecommendation({ commit }, payload) { // new recs without the disliked profile
+    commit("REMOVE_RECOMMENDATION", payload)
+  },
   async loginUser({ commit }, body) {
     console.log("Login user");
     const url = domain + "/login";
@@ -92,6 +95,9 @@ const mutations = {
   },
   GET_RECOMMENDATIONS: (state, payload) => {
     state.userRecommendations = payload;
+  },
+  REMOVE_RECOMMENDATION: (state, payload) => { // payload is the index
+    state.userRecommendations = payload
   },
   LOGIN_USER: (state, payload) => {
     state.userToken = payload.token;

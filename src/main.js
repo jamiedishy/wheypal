@@ -7,7 +7,7 @@ import VueSocketIO from 'vue-socket.io'
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
-Vue.use(VueSocketIO, 'http://localhost:8081')
+Vue.use(VueSocketIO, 'http://localhost:3000')
 
 new Vue({
   router,

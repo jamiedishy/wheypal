@@ -30,9 +30,9 @@
               <tbody>
                 <tr>
                   <td>
-                    xx
+                   
                   </td>
-                  <td>xx</td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
