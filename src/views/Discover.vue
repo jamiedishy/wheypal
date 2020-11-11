@@ -37,7 +37,6 @@
                 <card class="mb-3">
                   <div slot="header">
                     <h3>
-                      Name:
                       {{
                         recommendation.name ? recommendation.name : "Undefined"
                       }}
@@ -65,14 +64,14 @@
                     <custom-button
                       class="mr-2"
                       icon="thumbs-up"
-                      @click="dislike(recommendation.userID, 1)"
+                      @click="swipe(recommendation.userID, 1)"
                       outline
                     >
                     </custom-button>
                     <custom-button
                       class="mr-2"
                       icon="thumbs-down"
-                      @click="dislike(recommendation.userID, 2)"
+                      @click="swipe(recommendation.userID, 2)"
                       outline
                     >
                     </custom-button>
@@ -110,10 +109,8 @@ export default {
       dynamicComponent: "Discover",
       error: "",
       modalIsOpen: false,
-      recommendations: '',
       message: 'clicked button!',
       connection: null
-      // socket: new WebSocket("ws://localhost:8081/recommend")
     };
   },
   computed: {
@@ -121,54 +118,32 @@ export default {
       userRecommendations: state => state.wheypal.userRecommendations,
       userToken: state => state.wheypal.userToken,
       userID: state => state.wheypal.userId
-      
     })
   },
   methods: {
-    ...mapActions(["getRecommendations", "removeRecommendation"]),
-    async dislike(userid2, responseint) {
+    ...mapActions(["setRecommendations"]),
+    async swipe(userid2, responseint) {
       const body = {
         UserID1: this.userId,
         UserID2: userid2,
         RecomendationResponse: responseint
       }
-      // await this.$socket.emit('removeDislikedRecommendation', body) // server performs logic update
-      await this.$socket.send(body)
-    },
-
+      
+      await this.connection.send(body)
+    }
   },
-  // socket:{
-  //   onopen () {
-  //     console.log('Connected to server')
-  //   },
-  //   updateRecommendation (data) { // server passes updated recommendations 
-  //     this.removeRecommendation(data); // update store with new recommendations
-  //   }
-  // },
   mounted(){
     this.connection = new WebSocket("ws://localhost:8081/recommend")
+    const token = this.userToken;
     this.connection.onopen = function () {
-      this.send(this.$store.userToken);
-      console.log("connected with token ", $store.state.userToken)
+      this.send(token);
     }
     this.connection.onmessage = function (e) {
-      console.log("on message", e.data)
+      updateState(e.data);
     };
-
-    // const body = {
-    //   userID: this.userID,
-    //   userToken: this.userToken
-    // };
-    // try {
-    //   // await this.getRecommendations(body);
-    //   // this.$socket.onopen() {
-    //   //   console.log("connected")
-    //   // }
-    //   console.log(body)
-    // } catch (e) {
-    //   this.error = e;
-    //   this.modalIsOpen = !this.modalIsOpen;
-    // }
+    const updateState = (data) => {
+      this.setRecommendations(data)
+    };
   }
 };
 </script>

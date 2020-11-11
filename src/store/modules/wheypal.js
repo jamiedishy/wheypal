@@ -34,18 +34,8 @@ const actions = {
     payload["body"] = body;
     commit("CREATE_USER", payload);
   },
-  async getRecommendations({ commit }, body) {
-    console.log("Getting recommendations");
-    const url = domain + "/user";
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${body.userToken}`
-      }
-    });
-    const payload = response.data.filter(el => el.userID !== body.userID);
-    // console.table(payload)
-    // console.log("%c%s", "background: dodgerblue; padding: 5px; border-radius: 5x", "stylized log lol")
-    commit("GET_RECOMMENDATIONS", payload);
+  async setRecommendations({ commit }, payload) {
+    commit("SET_RECOMMENDATIONS", payload);
   },
   removeRecommendation({ commit }, payload) { // new recs without the disliked profile
     commit("REMOVE_RECOMMENDATION", payload)
@@ -93,8 +83,8 @@ const mutations = {
     state.userLocation = payload.body.location;
     state.userBirthday = payload.body.birthday;
   },
-  GET_RECOMMENDATIONS: (state, payload) => {
-    state.userRecommendations = payload;
+  SET_RECOMMENDATIONS: (state, payload) => {
+    state.userRecommendations = JSON.parse(payload);
   },
   REMOVE_RECOMMENDATION: (state, payload) => { // payload is the index
     state.userRecommendations = payload
