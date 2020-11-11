@@ -65,13 +65,14 @@
                     <custom-button
                       class="mr-2"
                       icon="thumbs-up"
+                      @click="dislike(recommendation.userID, 1)"
                       outline
                     >
                     </custom-button>
                     <custom-button
                       class="mr-2"
                       icon="thumbs-down"
-                      @click="dislike(recommendation.userID)"
+                      @click="dislike(recommendation.userID, 2)"
                       outline
                     >
                     </custom-button>
@@ -110,7 +111,9 @@ export default {
       error: "",
       modalIsOpen: false,
       recommendations: '',
-      message: 'clicked button!'
+      message: 'clicked button!',
+      connection: null
+      // socket: new WebSocket("ws://localhost:8081/recommend")
     };
   },
   computed: {
@@ -118,37 +121,54 @@ export default {
       userRecommendations: state => state.wheypal.userRecommendations,
       userToken: state => state.wheypal.userToken,
       userID: state => state.wheypal.userId
+      
     })
   },
   methods: {
     ...mapActions(["getRecommendations", "removeRecommendation"]),
-    async dislike(id) {
+    async dislike(userid2, responseint) {
       const body = {
-        userRecommendations: this.userRecommendations,
-        id: id
+        UserID1: this.userId,
+        UserID2: userid2,
+        RecomendationResponse: responseint
       }
-      await this.$socket.emit('removeDislikedRecommendation', body) // server performs logic update
-    }
-  },
-  sockets:{
-    connect () {
-      console.log('Connected to server')
+      // await this.$socket.emit('removeDislikedRecommendation', body) // server performs logic update
+      await this.$socket.send(body)
     },
-    updateRecommendation (data) { // server passes updated recommendations 
-      this.removeRecommendation(data); // update store with new recommendations
-    }
+
   },
-  async mounted(){
-    const body = {
-      userID: this.userID,
-      userToken: this.userToken
-    };
-    try {
-      await this.getRecommendations(body);
-    } catch (e) {
-      this.error = e;
-      this.modalIsOpen = !this.modalIsOpen;
+  // socket:{
+  //   onopen () {
+  //     console.log('Connected to server')
+  //   },
+  //   updateRecommendation (data) { // server passes updated recommendations 
+  //     this.removeRecommendation(data); // update store with new recommendations
+  //   }
+  // },
+  mounted(){
+    this.connection = new WebSocket("ws://localhost:8081/recommend")
+    this.connection.onopen = function () {
+      this.send(this.$store.userToken);
+      console.log("connected with token ", $store.state.userToken)
     }
+    this.connection.onmessage = function (e) {
+      console.log("on message", e.data)
+    };
+
+    // const body = {
+    //   userID: this.userID,
+    //   userToken: this.userToken
+    // };
+    // try {
+    //   // await this.getRecommendations(body);
+    //   // this.$socket.onopen() {
+    //   //   console.log("connected")
+    //   // }
+    //   console.log(body)
+    // } catch (e) {
+    //   this.error = e;
+    //   this.modalIsOpen = !this.modalIsOpen;
+    // }
   }
 };
 </script>
