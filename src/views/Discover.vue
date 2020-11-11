@@ -127,12 +127,7 @@ export default {
         userRecommendations: this.userRecommendations,
         id: id
       }
-      try {
-        await this.$socket.emit('removeDislikedRecommendation', body) // server performs logic update
-      } catch (e) {
-        this.error = e;
-        this.modalIsOpen = !this.modalIsOpen;
-      }
+      await this.$socket.emit('removeDislikedRecommendation', body) // server performs logic update
     }
   },
   sockets:{

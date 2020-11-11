@@ -18,7 +18,6 @@ server({ port }, [
   }),
   socket('connect', ctx => {
     console.log('client connected', Object.keys(ctx.io.sockets.sockets))
-    ctx.io.emit('count', {msg: 'HI U', count: Object.keys(ctx.io.sockets.sockets).length})
   })
 ])
   .then(() => console.log(`Server running at http://localhost:${port}`))
