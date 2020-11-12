@@ -151,6 +151,7 @@ export default {
         }
           await this.connection.send(JSON.stringify(body));
           this.userSwipedList.push(userid2);
+          this.updateRecommendationCount();
       // } else {
       //     this.error = "Already swiped on this user. Cannot re-swipe.";
       //     this.modalIsOpen = !this.modalIsOpen;
@@ -171,10 +172,10 @@ export default {
     const updateState = (data) => {
       if (this.userRecommendationsCount < 1 || this.userRecommendationsCount === null) {
         this.setRecommendations(data)
-        console.log('the count is ',this.userRecommendationsCount)
+        console.log('Grabbing new data from the backend. The count is ',this.userRecommendationsCount)
       } else {
-        this.updateRecommendationCount();
-        console.log('the count is ',this.userRecommendationsCount)
+        console.log("Not grabbing new data from the backend. The backend is just returning a 1 or 2. Not using this vaue currently because matching is not implemented.")
+        console.log("The count of possible remaining swipes is ", this.userRecommendationsCount)
       }
     }
   }
