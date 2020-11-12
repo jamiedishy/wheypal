@@ -61,20 +61,38 @@
                     </li>
                   </ul>
                   <div slot="footer">
-                    <custom-button
-                      class="mr-2"
-                      icon="thumbs-up"
-                      @click="swipe(recommendation.userID, 1)"
-                      outline
-                    >
-                    </custom-button>
-                    <custom-button
-                      class="mr-2"
-                      icon="thumbs-down"
-                      @click="swipe(recommendation.userID, 2)"
-                      outline
-                    >
-                    </custom-button>
+                    <template v-if="!userSwipedList.includes(recommendation.userID)">
+                      <custom-button
+                        class="mr-2"
+                        icon="thumbs-up"
+                        @click="swipe(recommendation.userID, 1)"
+                        outline
+                      >
+                      </custom-button>
+                      <custom-button
+                        class="mr-2"
+                        icon="thumbs-down"
+                        @click="swipe(recommendation.userID, 2)"
+                        outline
+                      >
+                      </custom-button>
+                    </template>
+                    <template v-else>
+                      <custom-button
+                        class="mr-2"
+                        icon="thumbs-up"
+                        outline
+                        :disabled="true"
+                      >
+                      </custom-button>
+                      <custom-button
+                        class="mr-2"
+                        icon="thumbs-down"
+                        outline
+                        :disabled="true"
+                      >
+                      </custom-button>
+                    </template>
                   </div>
                 </card>
               </div>
@@ -117,21 +135,29 @@ export default {
     ...mapState({
       userRecommendations: state => state.wheypal.userRecommendations,
       userToken: state => state.wheypal.userToken,
-      userID: state => state.wheypal.userId
+      userID: state => state.wheypal.userId,
+      userRecommendationsCount: state => state.wheypal.userRecommendationsCount,
+      userSwipedList: state => state.wheypal.userSwipedList
     })
   },
   methods: {
-    ...mapActions(["setRecommendations"]),
+    ...mapActions(["setRecommendations", "updateRecommendationCount"]),
     async swipe(userid2, responseint) {
-      const body = {
-        UserID1: this.userID,
-        UserID2: userid2,
-        RecommendationResponse: responseint
-      }
-        await this.connection.send(JSON.stringify(body))
+      // if (!this.userSwipedList.includes(userid2)) {
+        const body = {
+          UserID1: this.userID,
+          UserID2: userid2,
+          RecommendationResponse: responseint
+        }
+          await this.connection.send(JSON.stringify(body));
+          this.userSwipedList.push(userid2);
+      // } else {
+      //     this.error = "Already swiped on this user. Cannot re-swipe.";
+      //     this.modalIsOpen = !this.modalIsOpen;
+      // }
     }
   },
-  mounted(){
+  mounted() {
     this.connection = new WebSocket("ws://localhost:8081/recommend")
     // this.connection = this.$socket;
     const token = this.userToken;
@@ -143,8 +169,14 @@ export default {
       updateState(e.data);
     };
     const updateState = (data) => {
-      this.setRecommendations(data)
-    };
+      if (this.userRecommendationsCount < 1 || this.userRecommendationsCount === null) {
+        this.setRecommendations(data)
+        console.log('the count is ',this.userRecommendationsCount)
+      } else {
+        this.updateRecommendationCount();
+        console.log('the count is ',this.userRecommendationsCount)
+      }
+    }
   }
 };
 </script>

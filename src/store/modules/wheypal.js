@@ -12,7 +12,9 @@ const state = {
   userExpiry: null,
   userBirthday: null,
   userInterest: null,
-  userLocation: null
+  userLocation: null,
+  userRecommendationsCount: 0,
+  userSwipedList: []
 };
 
 const getters = {};
@@ -37,9 +39,12 @@ const actions = {
   async setRecommendations({ commit }, payload) {
     commit("SET_RECOMMENDATIONS", payload);
   },
-  removeRecommendation({ commit }, payload) { // new recs without the disliked profile
-    commit("REMOVE_RECOMMENDATION", payload)
+  updateRecommendationCount({ commit }) {
+    commit("UPDATE_RECOMMENDATION_COUNT")
   },
+  // removeRecommendation({ commit }, payload) { // new recs without the disliked profile
+  //   commit("REMOVE_RECOMMENDATION", payload)
+  // },
   async loginUser({ commit }, body) {
     console.log("Login user");
     const url = domain + "/login";
@@ -85,10 +90,14 @@ const mutations = {
   },
   SET_RECOMMENDATIONS: (state, payload) => {
     state.userRecommendations = JSON.parse(payload);
+    state.userRecommendationsCount = state.userRecommendations.length;
   },
-  REMOVE_RECOMMENDATION: (state, payload) => { // payload is the index
-    state.userRecommendations = payload
+  UPDATE_RECOMMENDATION_COUNT: (state) => {
+    state.userRecommendationsCount = state.userRecommendationsCount - 1;
   },
+  // REMOVE_RECOMMENDATION: (state, payload) => { // payload is the index
+  //   state.userRecommendations = payload
+  // },
   LOGIN_USER: (state, payload) => {
     state.userToken = payload.token;
     state.userExpiry = payload.expiry;
@@ -102,7 +111,11 @@ const mutations = {
   },
   LOGOFF_USER: state => {
     Object.keys(state).forEach(el => {
-      state[el] = null;
+      if (el === "userSwipedList") {
+        state[el] = []
+      } else {
+        state[el] = null;
+      }
     })
   },
   UPDATE_LOGIN: (state, payload) => {
