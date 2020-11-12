@@ -124,18 +124,19 @@ export default {
     ...mapActions(["setRecommendations"]),
     async swipe(userid2, responseint) {
       const body = {
-        UserID1: this.userId,
+        UserID1: this.userID,
         UserID2: userid2,
-        RecomendationResponse: responseint
+        RecommendationResponse: responseint
       }
-      
-      await this.connection.send(body)
+        await this.connection.send(JSON.stringify(body))
     }
   },
   mounted(){
     this.connection = new WebSocket("ws://localhost:8081/recommend")
+    // this.connection = this.$socket;
     const token = this.userToken;
     this.connection.onopen = function () {
+      console.log('Connecting')
       this.send(token);
     }
     this.connection.onmessage = function (e) {
