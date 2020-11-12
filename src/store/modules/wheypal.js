@@ -40,7 +40,7 @@ const actions = {
     commit("SET_RECOMMENDATIONS", payload);
   },
   updateRecommendationCount({ commit }) {
-    commit("UPDATE_RECOMMENDATION_COUNT")
+    commit("UPDATE_RECOMMENDATION_COUNT");
   },
   // removeRecommendation({ commit }, payload) { // new recs without the disliked profile
   //   commit("REMOVE_RECOMMENDATION", payload)
@@ -91,6 +91,10 @@ const mutations = {
   SET_RECOMMENDATIONS: (state, payload) => {
     state.userRecommendations = JSON.parse(payload);
     state.userRecommendationsCount = state.userRecommendations.length;
+    if (state.userRecommendationsCount === undefined) {
+      state.userRecommendations = [];
+      state.userRecommendationsCount = "No swipe candidates";
+    }
   },
   UPDATE_RECOMMENDATION_COUNT: (state) => {
     state.userRecommendationsCount = state.userRecommendationsCount - 1;

@@ -14,7 +14,6 @@
             <modal
               id="basicModal"
               :active="modalIsOpen"
-              title="Error"
               :show-button="false"
               @toggle="modalIsOpen = false"
             >
@@ -172,10 +171,20 @@ export default {
     const updateState = (data) => {
       if (this.userRecommendationsCount < 1 || this.userRecommendationsCount === null) {
         this.setRecommendations(data)
-        console.log('Grabbing new data from the backend. The count is ',this.userRecommendationsCount)
-      } else {
-        console.log("Not grabbing new data from the backend. The backend is just returning a 1 or 2. Not using this vaue currently because matching is not implemented.")
-        console.log("The count of possible remaining swipes is ", this.userRecommendationsCount)
+        console.log('Grabbing new data from the backend either on initial load or when getting more swipe candidates if the original amount were all swiped on. The count is ',this.userRecommendationsCount)
+        if (this.userRecommendationsCount === "No swipe candidates") {
+          console.log("Backend did not send any more swipe candidates so the new list or recommendations is null and the count is undefined.")
+          this.error = "No more possible swipes";
+          this.modalIsOpen = !this.modalIsOpen;
+        }
+      } 
+      else {
+        console.log("Not grabbing new data from the backend. The backend is just returning a 1 or 2. If 1, modal success popup")
+        console.log("The count of possible remaining swipes are ", this.userRecommendationsCount)
+        if (data === 1) {
+          this.error = "Congratulation! You've just matched with a new workout buddy!";
+          this.modalIsOpen = !this.modalIsOpen;
+        } else { console.log("Data is 2. No match.")}
       }
     }
   }
