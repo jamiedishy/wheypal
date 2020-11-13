@@ -158,7 +158,15 @@ export default {
     }
   },
   mounted() {
-    this.connection = new WebSocket("ws://localhost:8081/recommend")
+        var domain;
+    if (process.env.NODE_ENV === 'development') {
+      domain = 'localhost:8081';
+    } else {
+      domain = 'api.wheypal.com';
+    }
+
+
+    this.connection = new WebSocket("ws://"+domain+"/recommend")
     // this.connection = this.$socket;
     const token = this.userToken;
     this.connection.onopen = function () {
