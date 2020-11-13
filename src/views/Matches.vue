@@ -11,6 +11,14 @@
       <div class="container" slot="content">
         <div class="row">
           <div class="col-md-12">
+            <modal
+              id="basicModal"
+              :active="modalIsOpen"
+              :show-button="false"
+              @toggle="modalIsOpen = false"
+            >
+              <p>{{ this.error }}</p>
+            </modal>
             <div class="row mb-4">
             <header class="col-md-4 ml-2 mb-3">
               <h1 style="font-size: 4rem;" class="mt-5">Matches</h1>
@@ -52,6 +60,13 @@
                     </li>
                   </ul>
                   <div slot="footer">
+                    <custom-button
+                      class="mr-2"
+                      icon="thumbs-down"
+                      outline
+                      @click="unMatch(match.userID)"
+                    >
+                    </custom-button>
                   </div>
                 </card>
               </div>
@@ -68,19 +83,23 @@
 </template>
 
 <script>
-import { Layout, Card } from "rbc-wm-framework-vuejs/dist/wm/components";
+import { Layout, Card, Button, Modal } from "rbc-wm-framework-vuejs/dist/wm/components";
 import sideNav from "../../sidenav.JSON";
 import { mapState, mapActions } from "vuex";
 export default {
   name: "Matches",
   components: {
     "layout": Layout,
-    "card": Card
+    "card": Card,
+    "custom-button": Button,
+    modal: Modal
   },
   data() {
     return {
       dynamicComponent: "Discover",
-      sideNav: sideNav
+      sideNav: sideNav,
+      error: "",
+      modalIsOpen: false
     };
   },
   computed: {
@@ -90,7 +109,16 @@ export default {
     })
   },
   methods: {
-     ...mapActions(["getMatches"]),
+     ...mapActions(["getMatches", "deleteMatch"]),
+     unMatch(deleteUserID) {
+       const body = {
+         userID: deleteUserID,
+         userToken: this.userToken
+       }
+       this.deleteMatch(body);
+       this.error = "Unmatched :(";
+       this.modalIsOpen = !this.modalIsOpen;
+     }
   },
   mounted() { 
     this.getMatches(this.userToken);

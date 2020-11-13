@@ -163,7 +163,7 @@ export default {
         }
       } 
       else {
-        // console.log("data is ", data)
+        console.log("data is ", data)
         if (data === "1") {
           this.invokeModal("Congratulation! You've just matched with a new workout buddy!");
         } else if (data == "2") { 

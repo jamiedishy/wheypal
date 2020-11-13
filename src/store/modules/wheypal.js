@@ -86,6 +86,21 @@ const actions = {
     const payload = response.data;
     commit("GET_MATCHES", payload);
   },
+  async deleteMatch({ commit }, body) {
+    const url = domain + "/match/" + body.userID;
+    const config = {
+      method: 'delete',
+      headers: { 
+        'Authorization': `Bearer ${body.userToken}`
+      }
+    };
+    const response = await axios(url, config); // boolean
+    const payload = {
+      res: response,
+      userIdToDelete: body.userID
+    }
+    commit("DELETE_MATCHES", payload);
+  }
 };
 
 const mutations = {
@@ -142,6 +157,11 @@ const mutations = {
   },
   GET_MATCHES: (state, payload) => {
     state.userMatches = payload;
+  },
+  DELETE_MATCHES: (state, payload) => {
+    if (payload.res) {
+      state.userMatches = state.userMatches.filter(el => el.userID !== payload.userIdToDelete);
+    } 
   }
 };
 
