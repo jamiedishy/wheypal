@@ -145,7 +145,6 @@ export default {
       domain = 'api.wheypal.com';
     }
 
-
     this.connection = new WebSocket("ws://"+domain+"/recommend")
     // this.connection = this.$socket;
     const token = this.userToken;
@@ -164,9 +163,10 @@ export default {
         }
       } 
       else {
-        if (data === 1) {
+        // console.log("data is ", data)
+        if (data === "1") {
           this.invokeModal("Congratulation! You've just matched with a new workout buddy!");
-        } else { 
+        } else if (data == "2") { 
           this.invokeModal("Swiped. No match :(");
         }
       }

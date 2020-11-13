@@ -17,6 +17,49 @@
             </header>
             <img class="col-md-6" src="../assets/matches.png">
             </div>
+
+             <div class="row">
+               <template v-if="userMatches !== null">
+              <div
+                class="col-md-6"
+                v-for="(match, index) in userMatches"
+                :key="index"
+              >
+                <card class="mb-3">
+                  <div slot="header">
+                    <h3>
+                      {{
+                        match.name ? match.name : "Undefined"
+                      }}
+                    </h3>
+                  </div>
+                  <ul class="list-highlight">
+                    <li class="my-2">
+                      Interest:
+                      {{
+                        match.interest
+                          ? match.interest
+                          : "Undefined"
+                      }}
+                    </li>
+                    <li class="my-2">
+                      Location:
+                      {{
+                        match.location
+                          ? match.location
+                          : "Undefined"
+                      }}
+                    </li>
+                  </ul>
+                  <div slot="footer">
+                  </div>
+                </card>
+              </div>
+               </template>
+               <template v-else>
+                 No matches
+               </template>
+             </div>
           </div>
         </div>
       </div>
@@ -25,12 +68,14 @@
 </template>
 
 <script>
-import { Layout } from "rbc-wm-framework-vuejs/dist/wm/components";
+import { Layout, Card } from "rbc-wm-framework-vuejs/dist/wm/components";
 import sideNav from "../../sidenav.JSON";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "Matches",
   components: {
-    "layout": Layout
+    "layout": Layout,
+    "card": Card
   },
   data() {
     return {
@@ -38,10 +83,17 @@ export default {
       sideNav: sideNav
     };
   },
+  computed: {
+    ...mapState({
+      userMatches: state => state.wheypal.userMatches,
+      userToken: state => state.wheypal.userToken
+    })
+  },
   methods: {
-    hi() {
-      return console.log("hi");
-    }
+     ...mapActions(["getMatches"]),
+  },
+  mounted() { 
+    this.getMatches(this.userToken);
   }
 };
 </script>

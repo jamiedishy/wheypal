@@ -14,7 +14,8 @@ const state = {
   userInterest: null,
   userLocation: null,
   userRecommendationsCount: 0,
-  userSwipedList: []
+  userSwipedList: [],
+  userMatches: null
 };
 
 const getters = {};
@@ -73,6 +74,18 @@ const actions = {
     // payload["body"] = body;
     commit("UPDATE_LOGIN", body);
   },
+  async getMatches({ commit }, userToken) {
+    const url = domain + "/match";
+    const config = {
+      method: 'get',
+      headers: { 
+        'Authorization': `Bearer ${userToken}`
+      }
+    };
+    const response = await axios(url, config); 
+    const payload = response.data;
+    commit("GET_MATCHES", payload);
+  },
 };
 
 const mutations = {
@@ -126,6 +139,9 @@ const mutations = {
   UPDATE_LOGIN: (state, payload) => {
     state.userPassword = payload.password;
     state.userEmail = payload.email
+  },
+  GET_MATCHES: (state, payload) => {
+    state.userMatches = payload;
   }
 };
 
