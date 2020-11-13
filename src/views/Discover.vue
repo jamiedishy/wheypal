@@ -60,38 +60,20 @@
                     </li>
                   </ul>
                   <div slot="footer">
-                    <template v-if="!userSwipedList.includes(recommendation.userID)">
-                      <custom-button
-                        class="mr-2"
-                        icon="thumbs-up"
-                        @click="swipe(recommendation.userID, 1)"
-                        outline
-                      >
-                      </custom-button>
-                      <custom-button
-                        class="mr-2"
-                        icon="thumbs-down"
-                        @click="swipe(recommendation.userID, 2)"
-                        outline
-                      >
-                      </custom-button>
-                    </template>
-                    <template v-else>
-                      <custom-button
-                        class="mr-2"
-                        icon="thumbs-up"
-                        outline
-                        :disabled="true"
-                      >
-                      </custom-button>
-                      <custom-button
-                        class="mr-2"
-                        icon="thumbs-down"
-                        outline
-                        :disabled="true"
-                      >
-                      </custom-button>
-                    </template>
+                    <custom-button
+                      class="mr-2"
+                      icon="thumbs-up"
+                      @click="swipe(recommendation.userID, 1)"
+                      outline
+                    >
+                    </custom-button>
+                    <custom-button
+                      class="mr-2"
+                      icon="thumbs-down"
+                      @click="swipe(recommendation.userID, 2)"
+                      outline
+                    >
+                    </custom-button>
                   </div>
                 </card>
               </div>
@@ -140,26 +122,23 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setRecommendations", "updateRecommendationCount"]),
+    ...mapActions(["setRecommendations", "removeRecommendation"]),
     async swipe(userid2, responseint) {
-      // if (!this.userSwipedList.includes(userid2)) {
         const body = {
           UserID1: this.userID,
           UserID2: userid2,
           RecommendationResponse: responseint
         }
           await this.connection.send(JSON.stringify(body));
-          this.userSwipedList.push(userid2);
-          this.updateRecommendationCount();
-      // } else {
-      //     this.error = "Already swiped on this user. Cannot re-swipe.";
-      //     this.modalIsOpen = !this.modalIsOpen;
-      // }
+          this.removeRecommendation(userid2); // removes rec from store and updates count
+    },
+    invokeModal(message) {
+      this.error = message;
+      this.modalIsOpen = !this.modalIsOpen;
     }
   },
   mounted() {
     this.connection = new WebSocket("ws://localhost:8081/recommend")
-    // this.connection = this.$socket;
     const token = this.userToken;
     this.connection.onopen = function () {
       console.log('Connecting')
@@ -170,21 +149,17 @@ export default {
     };
     const updateState = (data) => {
       if (this.userRecommendationsCount < 1 || this.userRecommendationsCount === null) {
-        this.setRecommendations(data)
-        console.log('Grabbing new data from the backend either on initial load or when getting more swipe candidates if the original amount were all swiped on. The count is ',this.userRecommendationsCount)
-        if (this.userRecommendationsCount === "No swipe candidates") {
-          console.log("Backend did not send any more swipe candidates so the new list or recommendations is null and the count is undefined.")
-          this.error = "No more possible swipes";
-          this.modalIsOpen = !this.modalIsOpen;
+        this.setRecommendations(data);
+        if (this.userRecommendationsCount === 0) {
+          this.invokeModal("No more swipes :(");
         }
       } 
       else {
-        console.log("Not grabbing new data from the backend. The backend is just returning a 1 or 2. If 1, modal success popup")
-        console.log("The count of possible remaining swipes are ", this.userRecommendationsCount)
         if (data === 1) {
-          this.error = "Congratulation! You've just matched with a new workout buddy!";
-          this.modalIsOpen = !this.modalIsOpen;
-        } else { console.log("Data is 2. No match.")}
+          this.invokeModal("Congratulation! You've just matched with a new workout buddy!");
+        } else { 
+          this.invokeModal("Swiped. No match :(");
+        }
       }
     }
   }

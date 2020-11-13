@@ -39,12 +39,12 @@ const actions = {
   async setRecommendations({ commit }, payload) {
     commit("SET_RECOMMENDATIONS", payload);
   },
-  updateRecommendationCount({ commit }) {
-    commit("UPDATE_RECOMMENDATION_COUNT");
-  },
-  // removeRecommendation({ commit }, payload) { // new recs without the disliked profile
-  //   commit("REMOVE_RECOMMENDATION", payload)
+  // updateRecommendationCount({ commit }) {
+  //   commit("UPDATE_RECOMMENDATION_COUNT");
   // },
+  removeRecommendation({ commit }, payload) { // new recs without the disliked profile
+    commit("REMOVE_RECOMMENDATION", payload)
+  },
   async loginUser({ commit }, body) {
     console.log("Login user");
     const url = domain + "/login";
@@ -93,15 +93,16 @@ const mutations = {
     state.userRecommendationsCount = state.userRecommendations.length;
     if (state.userRecommendationsCount === undefined) {
       state.userRecommendations = [];
-      state.userRecommendationsCount = "No swipe candidates";
+      state.userRecommendationsCount = 0;
     }
   },
-  UPDATE_RECOMMENDATION_COUNT: (state) => {
+  // UPDATE_RECOMMENDATION_COUNT: (state) => {
+  //   state.userRecommendationsCount = state.userRecommendationsCount - 1;
+  // },
+  REMOVE_RECOMMENDATION: (state, payload) => { // payload is the index
+    state.userRecommendations = state.userRecommendations.filter(el => el.userID !== payload);
     state.userRecommendationsCount = state.userRecommendationsCount - 1;
   },
-  // REMOVE_RECOMMENDATION: (state, payload) => { // payload is the index
-  //   state.userRecommendations = payload
-  // },
   LOGIN_USER: (state, payload) => {
     state.userToken = payload.token;
     state.userExpiry = payload.expiry;
